@@ -1,7 +1,7 @@
 ---
 title: Nlik
 author: souhoc, ReyanCarlier, noegrx
-date: 21/01/2025
+date: 31/01/2025
 ---
 # Nlik - Hackathon project
 
