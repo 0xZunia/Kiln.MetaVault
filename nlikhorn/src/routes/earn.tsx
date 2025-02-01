@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useContext } from "react";
+import { HeadingContext } from "./__root";
 
 export const Route = createFileRoute("/earn")({
 	component: Earn,
@@ -16,5 +18,9 @@ const KilnWidget = ({ slug }: { slug: string }) => {
 };
 
 function Earn() {
+	const { setHeading } = useContext(HeadingContext);
+
+	setHeading("Earn");
+
 	return <KilnWidget slug="nlik" />;
 }

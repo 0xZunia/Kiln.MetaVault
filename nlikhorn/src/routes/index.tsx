@@ -1,10 +1,16 @@
-import { Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useContext } from "react";
+import { HeadingContext } from "./__root";
 
 export const Route = createFileRoute("/")({
 	component: Index,
 });
 
 function Index() {
-	return <Text>Hello World</Text>;
+	const { setHeading } = useContext(HeadingContext);
+
+	setHeading("Index");
+
+	return <Box>Here in index</Box>;
 }
