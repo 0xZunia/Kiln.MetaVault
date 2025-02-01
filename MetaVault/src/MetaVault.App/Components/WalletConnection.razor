@@ -1,0 +1,52 @@
+@using MetaVault.App.Services
+@inject IWeb3Service Web3Service
+@inject IJSRuntime JsRuntime
+
+<div class="wallet-connection">
+    @if (string.IsNullOrEmpty(Address))
+    {
+        <button @onclick="ConnectWallet" class="btn btn-primary">
+            Connect Wallet
+        </button>
+    }
+    else
+    {
+        <div class="flex items-center gap-2">
+            <span class="text-sm font-mono">@GetShortAddress(Address)</span>
+            <button @onclick="DisconnectWallet" class="btn btn-outline btn-sm">
+                Disconnect
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Address { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnAddressChanged { get; set; }
+
+    private async Task ConnectWallet()
+    {
+        var success = await Web3Service.ConnectWallet();
+        if (success)
+        {
+            Address = await Web3Service.GetConnectedAddress();
+            await OnAddressChanged.InvokeAsync(Address);
+        }
+    }
+
+    private async Task DisconnectWallet()
+    {
+        Address = string.Empty;
+        await OnAddressChanged.InvokeAsync(Address);
+        await JsRuntime.InvokeVoidAsync("localStorage.removeItem", "walletAddress");
+    }
+
+    private string GetShortAddress(string address)
+    {
+        if (string.IsNullOrEmpty(address)) return string.Empty;
+        return $"{address[..6]}...{address[^4..]}";
+    }
+}
