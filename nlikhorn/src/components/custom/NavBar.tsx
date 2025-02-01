@@ -8,9 +8,6 @@ import {
 import { Link, useLocation } from "@tanstack/react-router";
 import { LuHouse, LuPiggyBank, LuVault } from "react-icons/lu";
 
-const HERE_PALLETE = "orange";
-const NOT_HERE_PALLETE = "grey";
-
 export function NavBar() {
 	const isMobile = useBreakpointValue({ base: true, xl: false });
 
