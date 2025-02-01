@@ -1,75 +1,105 @@
 ﻿@page "/"
 @using MetaVault.App.Services
 @using MetaVault.App.Components
+@using MetaVault.Shared
 @inject IWeb3Service Web3Service
+@inject IMetaVaultService MetaVaultService
 @inject NavigationManager NavigationManager
 
 <div class="min-h-screen bg-gray-50">
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="text-center">
             <h1 class="text-4xl font-bold text-gray-900 mb-8">
-                Kiln MetaVault Manager
+                MetaVault Manager
             </h1>
 
             @if (_loading)
             {
                 <LoadingSpinner />
             }
-            else if (string.IsNullOrEmpty(_connectedAddress))
+            else
             {
-                <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
-                    <p class="text-gray-600 mb-6">
-                        Connect your wallet to manage your MetaVault
-                    </p>
-                    <button @onclick="ConnectWallet" 
-                            class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
-                        Connect Wallet
-                    </button>
-                </div>
-            }
-            else if (!_hasMetaVault)
-            {
-                <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm text-gray-500">Connected Address:</span>
-                        <span class="text-sm font-mono">@GetShortAddress(_connectedAddress)</span>
+                @if (_error != null)
+                {
+                    <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
+                        <p class="text-red-600">@_error</p>
                     </div>
-                    <p class="text-gray-600 mb-6">
-                        You don't have a MetaVault yet. Create one to start managing your allocations.
-                    </p>
-                    <button @onclick="CreateMetaVault" 
-                            disabled="@_isCreating"
-                            class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors disabled:bg-gray-400">
-                        @if (_isCreating)
+                }
+
+                <div class="space-y-6">
+                    <!-- Section Factory -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-semibold mb-4">Factory Management</h2>
+                        @if (!_factoryDeployed)
                         {
-                            <span>Creating...</span>
+                            <button @onclick="DeployFactory"
+                                    disabled="@_isDeploying"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400">
+                                @if (_isDeploying)
+                                {
+                                    <span>Deploying...</span>
+                                }
+                                else
+                                {
+                                    <span>Deploy Factory</span>
+                                }
+                            </button>
                         }
                         else
                         {
-                            <span>Create MetaVault</span>
+                            <div class="flex items-center justify-between p-4 bg-green-50 rounded-md">
+                                <span class="text-green-700">Factory deployed!</span>
+                                <span class="font-mono text-sm">@_factoryAddress</span>
+                            </div>
                         }
-                    </button>
-                </div>
-            }
-            else
-            {
-                <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg">
-                    <div class="border-b border-gray-200 p-4">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-500">Your MetaVault:</span>
-                            <span class="text-sm font-mono">@GetShortAddress(_metaVaultAddress)</span>
-                        </div>
                     </div>
-                    <div class="p-4">
-                        <VaultManager MetaVaultAddress="@_metaVaultAddress" />
-                    </div>
-                </div>
-            }
 
-            @if (!string.IsNullOrEmpty(_error))
-            {
-                <div class="mt-4 max-w-md mx-auto bg-red-50 border border-red-200 rounded-md p-4">
-                    <p class="text-red-600 text-sm">@_error</p>
+                    <!-- Section Wallet Connection -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-semibold mb-4">Wallet Connection</h2>
+                        @if (string.IsNullOrEmpty(_connectedAddress))
+                        {
+                            <button @onclick="ConnectWallet" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                                Connect Wallet
+                            </button>
+                        }
+                        else
+                        {
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono">@GetShortAddress(_connectedAddress)</span>
+                                <button @onclick="DisconnectWallet" class="text-sm text-gray-600 hover:text-gray-900">
+                                    Disconnect
+                                </button>
+                            </div>
+                        }
+                    </div>
+
+                    @if (_factoryDeployed && !string.IsNullOrEmpty(_connectedAddress))
+                    {
+                        <!-- Section MetaVault -->
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-xl font-semibold mb-4">MetaVault Management</h2>
+                            @if (!_hasMetaVault)
+                            {
+                                <button @onclick="CreateMetaVault"
+                                        disabled="@_isCreating"
+                                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400">
+                                    @if (_isCreating)
+                                    {
+                                        <span>Creating...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Create MetaVault</span>
+                                    }
+                                </button>
+                            }
+                            else
+                            {
+                                <VaultManager MetaVaultAddress="@_metaVaultAddress" />
+                            }
+                        </div>
+                    }
                 </div>
             }
         </div>
@@ -78,17 +108,21 @@
 
 @code {
     private bool _loading = true;
+    private bool _isDeploying = false;
     private bool _isCreating = false;
+    private bool _factoryDeployed = false;
     private bool _hasMetaVault = false;
-    private string _error = string.Empty;
+    private string? _error;
     private string _connectedAddress = string.Empty;
     private string _metaVaultAddress = string.Empty;
+    private string _factoryAddress = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             await CheckWalletStatus();
+            await CheckFactoryStatus();
         }
         finally
         {
@@ -96,33 +130,15 @@
         }
     }
 
-    private async Task CheckWalletStatus()
-    {
-        _connectedAddress = await Web3Service.GetConnectedAddress();
-        
-        if (!string.IsNullOrEmpty(_connectedAddress))
-        {
-            _hasMetaVault = await Web3Service.HasMetaVault(_connectedAddress);
-            if (_hasMetaVault)
-            {
-                _metaVaultAddress = await Web3Service.GetUserMetaVault(_connectedAddress);
-            }
-        }
-    }
-
-    private async Task ConnectWallet()
+    private async Task CheckFactoryStatus()
     {
         try
         {
-            _error = string.Empty;
-            var success = await Web3Service.ConnectWallet();
-            if (success)
+            var networkId = await Web3Service.GetNetworkId();
+            _factoryDeployed = Constants.ContractAddresses.NetworkFactoryAddresses.ContainsKey(networkId);
+            if (_factoryDeployed)
             {
-                await CheckWalletStatus();
-            }
-            else
-            {
-                _error = "Failed to connect wallet. Please make sure MetaMask is installed and try again.";
+                _factoryAddress = Constants.ContractAddresses.NetworkFactoryAddresses[networkId];
             }
         }
         catch (Exception ex)
@@ -131,13 +147,105 @@
         }
     }
 
+    private async Task CheckWalletStatus()
+    {
+        _connectedAddress = await Web3Service.GetConnectedAddress();
+
+        if (!string.IsNullOrEmpty(_connectedAddress))
+        {
+            _hasMetaVault = await Web3Service.HasMetaVault(_connectedAddress);
+            if (_hasMetaVault)
+            {
+                _metaVaultAddress = await Web3Service.GetUserMetaVault(_connectedAddress);
+            }
+            else
+            {
+                _metaVaultAddress = string.Empty;
+            }
+        }
+    }
+
+    private async Task ConnectWallet()
+    {
+        try
+        {
+            _error = null;
+            StateHasChanged(); // Effacer les erreurs précédentes
+
+            Console.WriteLine("Starting wallet connection process...");
+            var success = await Web3Service.ConnectWallet();
+            Console.WriteLine($"Connection result: {success}");
+
+            if (success)
+            {
+                Console.WriteLine("Checking wallet status...");
+                await CheckWalletStatus();
+                StateHasChanged();
+            }
+            else
+            {
+                _error = "Failed to connect wallet. Please make sure MetaMask is installed and try again.";
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error during wallet connection: {ex.Message}");
+            Console.WriteLine($"Stack trace: {ex.StackTrace}");
+            _error = $"Connection error: {ex.Message}";
+            StateHasChanged();
+        }
+    }
+
+    private async Task DisconnectWallet()
+    {
+        _connectedAddress = string.Empty;
+        _hasMetaVault = false;
+        _metaVaultAddress = string.Empty;
+        StateHasChanged();
+    }
+
+    private async Task DeployFactory()
+    {
+        try
+        {
+            _error = null;
+            _isDeploying = true;
+
+            // Vérifier que le wallet est connecté
+            if (string.IsNullOrEmpty(_connectedAddress))
+            {
+                _error = "Please connect your wallet first";
+                return;
+            }
+
+            var txHash = await Web3Service.DeployFactory();
+            if (!string.IsNullOrEmpty(txHash))
+            {
+                await CheckFactoryStatus();
+            }
+            else
+            {
+                _error = "Failed to deploy factory. Please try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _isDeploying = false;
+        }
+    }
+
     private async Task CreateMetaVault()
     {
         try
         {
-            _error = string.Empty;
+            _error = null;
             _isCreating = true;
-            
+
             var txHash = await Web3Service.CreateMetaVault();
             if (!string.IsNullOrEmpty(txHash))
             {

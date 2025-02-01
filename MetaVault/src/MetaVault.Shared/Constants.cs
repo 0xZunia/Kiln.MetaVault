@@ -4,7 +4,7 @@ public static class Constants
 {
     public static class ContractAddresses
     {
-        public const string MetaVaultFactory = "YOUR_FACTORY_ADDRESS";
+        public const string MetaVaultFactory = "";
             
         // Réseaux supportés
         public static readonly Dictionary<int, string> NetworkFactoryAddresses = new()

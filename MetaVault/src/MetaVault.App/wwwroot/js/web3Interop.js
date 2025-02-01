@@ -2,37 +2,44 @@ window.web3Interop = {
     // Initialize any required state
     init: function() {
         console.log("Web3 Interop initialized");
-        // You can add any initialization logic here
+        this.ensureEthereumProviderExists();
+    },
+    
+    ensureEthereumProviderExists: function() {
+        if (typeof window.ethereum === 'undefined') {
+            console.error("MetaMask is not installed");
+            throw new Error("MetaMask is not installed");
+        }
     },
 
     // Connect wallet function
     connectWallet: async function() {
         try {
-            // Check if MetaMask is installed
-            if (typeof window.ethereum === 'undefined') {
-                throw new Error("MetaMask is not installed");
-            }
+            console.log("Connecting wallet...");
+            this.ensureEthereumProviderExists();
 
             // Request account access
+            console.log("Requesting account access...");
             const accounts = await window.ethereum.request({
                 method: 'eth_requestAccounts'
             });
 
+            console.log("Accounts received:", accounts);
             // Return true if we have at least one account
-            return accounts.length > 0;
-
+            const result = accounts.length > 0;
+            console.log("Connection result:", result);
+            return result;
         } catch (error) {
             console.error("Error connecting wallet:", error);
-            return false;
+            // Renvoyer plus d'informations sur l'erreur
+            throw new Error(`Failed to connect wallet: ${error.message}`);
         }
     },
-
+    
     // Get connected address
     getConnectedAddress: async function() {
         try {
-            if (typeof window.ethereum === 'undefined') {
-                return '';
-            }
+            this.ensureEthereumProviderExists();
 
             const accounts = await window.ethereum.request({
                 method: 'eth_accounts'
@@ -45,20 +52,66 @@ window.web3Interop = {
         }
     },
 
-    // Call a read-only contract method
-    callContract: async function(contractAddress, methodName, params) {
+    // Get network ID
+    getNetworkId: async function() {
         try {
+            this.ensureEthereumProviderExists();
+
+            const chainId = await window.ethereum.request({
+                method: 'eth_chainId'
+            });
+
+            return parseInt(chainId, 16);
+        } catch (error) {
+            console.error("Error getting network ID:", error);
+            throw error;
+        }
+    },
+
+    // Deploy factory contract
+    deployFactory: async function() {
+        try {
+            this.ensureEthereumProviderExists();
+
+            // Création du provider et du signer
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
 
-            // Create contract instance
-            const contract = new ethers.Contract(
-                contractAddress,
-                this.getContractABI(methodName),
+            // Création de la factory de contrat
+            const factory = new ethers.ContractFactory(
+                MetaVaultFactoryABI,
+                MetaVaultFactoryBytecode,
                 signer
             );
 
-            // Call the method
+            // Déploiement du contrat
+            console.log("Deploying factory contract...");
+            const contract = await factory.deploy();
+
+            // Attente de la confirmation
+            console.log("Waiting for deployment confirmation...");
+            const receipt = await contract.waitForDeployment();
+
+            // Récupération de l'adresse du contrat déployé
+            const deployedAddress = await contract.getAddress();
+            console.log("Factory deployed at:", deployedAddress);
+
+            return deployedAddress;
+        } catch (error) {
+            console.error("Error deploying factory:", error);
+            throw error;
+        }
+    },
+
+    // Call a read-only contract method
+    callContract: async function(contractAddress, methodName, params) {
+        try {
+            this.ensureEthereumProviderExists();
+
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const contract = this.getContract(contractAddress, methodName, provider);
+            
+            console.log(`Calling ${methodName} on ${contractAddress}...`);
             return await contract[methodName](...(params || []));
         } catch (error) {
             console.error(`Error calling ${methodName}:`, error);
@@ -66,22 +119,21 @@ window.web3Interop = {
         }
     },
 
-    // Send a transaction to the contract
+    // Send a contract transaction
     sendContractTransaction: async function(contractAddress, methodName, params) {
         try {
+            this.ensureEthereumProviderExists();
+
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
-
-            // Create contract instance
-            const contract = new ethers.Contract(
-                contractAddress,
-                this.getContractABI(methodName),
-                signer
-            );
-
-            // Send transaction
+            const contract = this.getContract(contractAddress, methodName, signer);
+            
+            console.log(`Sending transaction ${methodName} to ${contractAddress}...`);
             const tx = await contract[methodName](...(params || []));
+            
+            console.log("Waiting for transaction confirmation...");
             const receipt = await tx.wait();
+
             return receipt.hash;
         } catch (error) {
             console.error(`Error in transaction ${methodName}:`, error);
@@ -89,30 +141,40 @@ window.web3Interop = {
         }
     },
 
+    // Helper to get contract instance
+    getContract: function(address, methodName, signerOrProvider) {
+        // Select appropriate ABI based on method name
+        const abi = this.getContractABI(methodName);
+        return new ethers.Contract(address, abi, signerOrProvider);
+    },
+
     // Helper to get appropriate ABI based on method
     getContractABI: function(methodName) {
+        // ABIs of the different contracts
         const contractABIs = {
             metaVaultFactory: [
                 "function createMetaVault() external returns (address)",
                 "function hasMetaVault(address user) external view returns (bool)",
                 "function getUserMetaVault(address user) external view returns (address)",
-                "function beacon() external view returns (address)"
+                "function beacon() external view returns (address)",
+                "function initialize(address initialAdmin, uint48 initialDelay) external"
             ],
             metaVault: [
                 "function initialize() external",
-                "function updateAllocation(uint256 _vaultId, uint256 _newAllocation) external",
-                "function getActiveVaults() external view returns (uint256[] memory ids, address[] memory addresses, uint256[] memory allocations)",
-                "function owner() external view returns (address)"
-            ],
-            beacon: [
-                "function implementation() external view returns (address)"
+                "function addVault(address vault, uint256 allocation) external",
+                "function updateAllocation(address vault, uint256 newAllocation) external",
+                "function getActiveVaults() external view returns (address[] memory vaults, uint256[] memory allocations)",
+                "function owner() external view returns (address)",
+                "function deposit(uint256 assets, address receiver) external returns (uint256)",
+                "function withdraw(uint256 assets, address receiver, address owner) external returns (uint256)"
             ]
         };
 
         // Return appropriate ABI based on method name
-        return methodName.includes('MetaVault') ?
-            contractABIs.metaVaultFactory :
-            contractABIs.metaVault;
+        if (methodName.toLowerCase().includes('metavault')) {
+            return contractABIs.metaVaultFactory;
+        }
+        return contractABIs.metaVault;
     }
 };
 

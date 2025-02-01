@@ -6,7 +6,7 @@ namespace MetaVault.App.Services;
 public class Web3Service : IWeb3Service
 {
     private readonly IJSRuntime _jsRuntime;
-    private const string MetaVaultFactoryAddress = "YOUR_FACTORY_ADDRESS";
+    private string MetaVaultFactoryAddress = "";
 
     public Web3Service(IJSRuntime jsRuntime)
     {
@@ -42,6 +42,10 @@ public class Web3Service : IWeb3Service
     {
         try
         {
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                return null;
+            }
             return await _jsRuntime.InvokeAsync<dynamic>(
                 "web3Interop.callContract",
                 address,
@@ -78,6 +82,10 @@ public class Web3Service : IWeb3Service
     {
         try
         {
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                return false;
+            }
             return await CallContract(
                 Constants.ContractAddresses.MetaVaultFactory,
                 "hasMetaVault",
@@ -149,6 +157,21 @@ public class Web3Service : IWeb3Service
         catch (Exception)
         {
             return 0;
+        }
+    }
+    
+    public async Task<string> DeployFactory()
+    {
+        try
+        {
+            return await _jsRuntime.InvokeAsync<string>(
+                "web3Interop.deployFactory"
+            );
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error deploying factory: {ex.Message}");
+            throw;
         }
     }
 }

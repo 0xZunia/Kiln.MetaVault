@@ -13,4 +13,5 @@ public interface IWeb3Service
     Task<dynamic> CallContract(string address, string methodName, params object[] args);
     Task<dynamic> SendContractTransaction(string address, string methodName, params object[] args);
     Task<int> GetNetworkId();
+    Task<string> DeployFactory();
 }

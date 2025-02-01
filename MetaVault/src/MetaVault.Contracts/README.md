@@ -1,3 +1,16 @@
+## Currently Deployed Contracts
+
+### MetaVaultFactory
+- **Address**: [0x9f2aFA649C0b23661fB51D12ba6fFc552E675507](https://sepolia.etherscan.io/address/0x9f2afa649c0b23661fb51d12ba6ffc552e675507)
+
+### MetaVault (PersonalMetaVault)
+- **Address**: [0xB73E64c9668B817eDdAD358eAa6FDE43C4dCdB85](https://sepolia.etherscan.io/address/0xB73E64c9668B817eDdAD358eAa6FDE43C4dCdB85)
+
+### Transaction History :
+- **Initialize MetaVault**: TX. [0x5cc77f5c10366ffb790bebf61ea9bb76bb000632c5c7b4e0c85ffe493ce93eea](https://sepolia.etherscan.io/tx/0x5cc77f5c10366ffb790bebf61ea9bb76bb000632c5c7b4e0c85ffe493ce93eea)
+- **Add Kiln Vault ([0xdea01fc5289af2c440ca65582e3c44767c0fcf08](https://sepolia.etherscan.io/address/0xdea01fc5289af2c440ca65582e3c44767c0fcf08))** : TX. [0x5b4443866a0a5ce08202d6ad553feba0fd8348ff3f2d1cc3a8c233f0da539a97](https://sepolia.etherscan.io/tx/0x5b4443866a0a5ce08202d6ad553feba0fd8348ff3f2d1cc3a8c233f0da539a97)
+
+
 # MetaVault System
 
 ## Overview
