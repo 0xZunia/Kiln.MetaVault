@@ -344,7 +344,7 @@ contract PersonalMetaVault is Initializable, ReentrancyGuardUpgradeable {
             uint256 withdrawAmount = currentValue - targetValue;
             _executeWithdraw(vault, withdrawAmount);
         }
-}
+    }
 
     function _updateVaultPerformance(address vault) internal {
         VaultAllocation storage allocation = vaultAllocations[vault];
