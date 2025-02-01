@@ -1,5 +1,5 @@
 import { Container, HStack, IconButton } from "@chakra-ui/react";
-import { LuHouse, LuSearch, LuCheck } from "react-icons/lu";
+import { LuCheck, LuHouse, LuSearch } from "react-icons/lu";
 
 export function NavBar() {
 	return (

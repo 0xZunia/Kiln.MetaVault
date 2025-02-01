@@ -1,23 +1,33 @@
-import { HStack } from "@chakra-ui/react";
+import { NavBar } from "@/components/custom/NavBar";
+import { ColorModeButton } from "@/components/ui/color-mode";
+import { Center, Container } from "@chakra-ui/react";
 import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 export const Route = createRootRoute({
 	component: () => (
 		<>
-			<div className="p-2 flex gap-2">
-				<Link to="/" className="[&.active]:font-bold">
-					Home
-				</Link>{" "}
-				<Link to="/about" className="[&.active]:font-bold">
-					About
-				</Link>
-			</div>
-			<hr />
+			<Center height={"100svh"}>
+				<Container
+					maxWidth={"xl"}
+					boxSize={"full"}
+					padding={2}
+					position={"relative"}
+				>
+					<Link to="/" className="[&.active]:font-bold">
+						Home
+					</Link>
+					<Link to="/about" className="[&.active]:font-bold">
+						About
+					</Link>
+					<ColorModeButton />
 
-			<HStack boxSize="full">
-				<Outlet />
-			</HStack>
+					<Outlet />
+
+					<NavBar />
+				</Container>
+			</Center>
+
 			{import.meta.env.DEV && <TanStackRouterDevtools />}
 		</>
 	),
