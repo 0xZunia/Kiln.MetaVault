@@ -1,7 +1,11 @@
 import { Container, HStack, Heading } from "@chakra-ui/react";
 import { ColorModeButton } from "../ui/color-mode";
+import { HeadingContext } from "@/routes/__root";
+import { useContext } from "react";
 
-export function Header({ heading }: { heading: string }) {
+export function Header() {
+	const { heading } = useContext(HeadingContext);
+
 	return (
 		<Container
 			zIndex={"sticky"}

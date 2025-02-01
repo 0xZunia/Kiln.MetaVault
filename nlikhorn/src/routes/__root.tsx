@@ -22,6 +22,7 @@ export const Route = createRootRoute({
 			document.title = `NLik | ${value}`;
 			setHeading(value);
 		};
+
 		return (
 			<HeadingContext.Provider
 				value={{
@@ -43,7 +44,7 @@ export const Route = createRootRoute({
 						gridTemplateRows={"auto 1fr auto"}
 						gap={6}
 					>
-						<Header heading={heading} />
+						<Header />
 
 						<Outlet />
 
