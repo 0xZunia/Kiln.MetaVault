@@ -36,7 +36,11 @@ export function NavBar() {
 			>
 				<ChakraLink asChild flex={1}>
 					<Link to="/">
-						<Button width={"full"} colorPalette={isHere("/") ? "" : "gray"}>
+						<Button
+							variant={"subtle"}
+							width={"full"}
+							colorPalette={isHere("/") ? "" : "gray"}
+						>
 							<LuHouse /> {!isMobile && "Dashboard"}
 						</Button>
 					</Link>
@@ -45,6 +49,7 @@ export function NavBar() {
 				<ChakraLink asChild flex={2}>
 					<Link to="/vault">
 						<Button
+							variant={"subtle"}
 							width={"full"}
 							colorPalette={isHere("/vault") ? "" : "gray"}
 						>
@@ -55,7 +60,11 @@ export function NavBar() {
 
 				<ChakraLink asChild flex={1}>
 					<Link to="/earn">
-						<Button width={"full"} colorPalette={isHere("/earn") ? "" : "gray"}>
+						<Button
+							variant={"subtle"}
+							width={"full"}
+							colorPalette={isHere("/earn") ? "" : "gray"}
+						>
 							<LuPiggyBank />
 							{!isMobile && "Earn"}
 						</Button>

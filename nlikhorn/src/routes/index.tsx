@@ -14,10 +14,14 @@ function Index() {
 			gap={2}
 		>
 			<GridItem colSpan={2} width={"full"}>
-				<Skeleton id="total founds" width={"full"} />
+				<Skeleton boxSize={"full"} />
 			</GridItem>
-			<TotalFounds />
-			<Skeleton id="available founds" width={"full"} />
+			<GridItem>
+				<TotalFounds />
+			</GridItem>
+			<GridItem as={Skeleton}>
+				<Skeleton id="available founds" width={"full"} />
+			</GridItem>
 		</Grid>
 	);
 }
