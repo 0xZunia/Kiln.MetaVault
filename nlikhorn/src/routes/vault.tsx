@@ -3,10 +3,20 @@ import { SimpleLoader } from "@/components/custom/simpleLoader";
 import { useGetMetaVault } from "@/hooks/factory";
 import { addressConfig } from "@/utils/addressConfig";
 import { factoryABI } from "@/utils/factoryABI";
-import { Button, Card, Grid, Skeleton } from "@chakra-ui/react";
+import { metaVaultABI } from "@/utils/metaVaultABI";
+import {
+	Button,
+	Card,
+	Grid,
+	HStack,
+	Skeleton,
+	Text,
+	VStack,
+} from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { useAccount, useWriteContract } from "wagmi";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
 
 export const Route = createFileRoute("/vault")({
 	component: RouteComponent,
@@ -14,16 +24,15 @@ export const Route = createFileRoute("/vault")({
 
 function RouteComponent() {
 	const { address } = useAccount();
-	const { data, isLoading } = useGetMetaVault(address);
-	console.log(data);
+	const { data: vaultAddress, isLoading } = useGetMetaVault(address);
 
 	const hasVault = useMemo(() => {
 		return (
-			data &&
-			data !== "0x" &&
-			data !== "0x0000000000000000000000000000000000000000"
+			vaultAddress &&
+			vaultAddress !== "0x" &&
+			vaultAddress !== "0x0000000000000000000000000000000000000000"
 		);
-	}, [data]);
+	}, [vaultAddress]);
 
 	if (isLoading) {
 		return <SimpleLoader />;
@@ -33,17 +42,7 @@ function RouteComponent() {
 		return <CreateVaultCard />;
 	}
 
-	return (
-		<Grid
-			gridTemplateColumns={"repeat(2, 1fr)"}
-			gridTemplateRows={"repeat(2, 1fr)"}
-			gap={2}
-		>
-			<TotalFounds />
-			<Skeleton id="total founds" width={"full"} />
-			<Skeleton id="available founds" width={"full"} />
-		</Grid>
-	);
+	return <VaultManager vaultAddress={vaultAddress as `0x${string}`} />;
 }
 
 function CreateVaultCard() {
@@ -71,5 +70,59 @@ function CreateVaultCard() {
 				<Button onClick={handleSubmit}>Create Vault</Button>
 			</Card.Footer>
 		</Card.Root>
+	);
+}
+
+function VaultManager({ vaultAddress }: { vaultAddress: `0x${string}` }) {
+	// Getter
+	const { data: allocation } = useReadContract({
+		abi: metaVaultABI,
+		address: vaultAddress,
+		functionName: "getTotalAllocation",
+	});
+	const { data: getActiveVaults } = useReadContract({
+		abi: metaVaultABI,
+		address: vaultAddress,
+		functionName: "getActiveVaults",
+	});
+	const { data: shouldRebalance } = useReadContract({
+		abi: metaVaultABI,
+		address: vaultAddress,
+		functionName: "shouldRebalance",
+	});
+	console.log({ allocation, getActiveVaults, shouldRebalance });
+
+	// Create a query using tanstack/react-query
+	const { data } = useQuery({
+		queryKey: ["kiln_vaults"],
+		queryFn: () =>
+			fetch(
+				`https://api${import.meta.env.DEV && ".testnet"}.kiln.fi/v1/deployments`,
+				{
+					headers: {
+						Authorization: `Bearer ${import.meta.env.VITE_KILN_API_KEY}`,
+					},
+				},
+			).then((res) => res.json()),
+	});
+	const vaultList = data?.data?.filter(
+		(vault: { status: string; chain: string }) => vault.status === "active",
+	);
+
+	return (
+		<Grid
+			gridTemplateColumns={"repeat(2, 1fr)"}
+			gridTemplateRows={"repeat(2, 1fr)"}
+			gap={2}
+		>
+			<TotalFounds />
+			<Skeleton id="total founds" width={"full"} />
+			<Skeleton id="available founds" width={"full"} />
+			<VStack justify="center">
+				{vaultList?.map((vault: { address: string; description: string }) => (
+					<Text key={vault.address}>{vault.description}</Text>
+				))}
+			</VStack>
+		</Grid>
 	);
 }
