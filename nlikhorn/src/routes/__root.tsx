@@ -7,6 +7,14 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 export const Route = createRootRoute({
 	component: () => (
 		<>
+			<ColorModeButton
+				position="absolute"
+				top={3}
+				right={3}
+				zIndex="sticky"
+				variant="solid"
+			/>
+
 			<Center height={"100svh"}>
 				<Container
 					maxWidth={"xl"}
@@ -14,8 +22,6 @@ export const Route = createRootRoute({
 					padding={2}
 					position={"relative"}
 				>
-					<ColorModeButton />
-
 					<Outlet />
 
 					<NavBar />

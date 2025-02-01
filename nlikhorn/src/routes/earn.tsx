@@ -10,7 +10,7 @@ const KilnWidget = ({ slug }: { slug: string }) => {
 			src={`https://${slug}.widget${import.meta.env.DEV && ".testnet"}.kiln.fi`}
 			title="Nlik Widget"
 			allow="clipboard-write"
-			style={{ width: "80vw", height: "80vh", borderRadius: "1rem" }}
+			style={{ width: "100%", height: "100%", borderRadius: "1rem" }}
 		/>
 	);
 };
