@@ -1,6 +1,7 @@
 import { Box, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useContext } from "react";
+import { useAccount, useEnsName } from "wagmi";
 import { HeadingContext } from "./__root";
 
 export const Route = createFileRoute("/")({

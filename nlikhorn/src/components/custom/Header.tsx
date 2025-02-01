@@ -1,5 +1,6 @@
 import { Container, HStack, Heading } from "@chakra-ui/react";
 import { ColorModeButton } from "../ui/color-mode";
+import { DisconnectButton } from "../web3/disconnectButton";
 
 export function Header({ heading }: { heading: string }) {
 	return (
@@ -16,6 +17,7 @@ export function Header({ heading }: { heading: string }) {
 				bgColor={"bg"}
 			>
 				<Heading>{heading}</Heading>
+				<DisconnectButton />
 				<ColorModeButton />
 			</HStack>
 		</Container>
