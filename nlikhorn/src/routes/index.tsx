@@ -1,4 +1,4 @@
-import { Box, VStack } from "@chakra-ui/react";
+import { Grid, Skeleton } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useContext } from "react";
 import { HeadingContext } from "./__root";
@@ -9,29 +9,17 @@ export const Route = createFileRoute("/")({
 
 function Index() {
 	const { setHeading } = useContext(HeadingContext);
-
-	setHeading("Index");
+	setHeading("Dashboard");
 
 	return (
-		<VStack gap={1} width={"full"}>
-			<Box w={"full"} bgColor={"bg.subtle"} height={"200px"}>
-				Here in index
-			</Box>
-			<Box bgColor={"bg.subtle"} height={"200px"}>
-				Here in index
-			</Box>
-			<Box bgColor={"bg.subtle"} height={"200px"}>
-				Here in index
-			</Box>
-			<Box bgColor={"bg.subtle"} height={"200px"}>
-				Here in index
-			</Box>
-			<Box bgColor={"bg.subtle"} height={"200px"}>
-				Here in index
-			</Box>
-			<Box bgColor={"bg.subtle"} height={"200px"}>
-				Here in index
-			</Box>
-		</VStack>
+		<Grid
+			gridTemplateColumns={"repeat(2, 1fr)"}
+			gridTemplateRows={"repeat(2, 1fr)"}
+			gap={2}
+		>
+			<Skeleton id="nb of active vault" width={"full"} />
+			<Skeleton id="total founds" width={"full"} />
+			<Skeleton id="available founds" width={"full"} />
+		</Grid>
 	);
 }
