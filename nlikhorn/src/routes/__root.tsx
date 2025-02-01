@@ -23,26 +23,36 @@ export const Route = createRootRoute({
 			setHeading(value);
 		};
 		return (
-			<>
-				<HeadingContext.Provider
-					value={{
-						heading: heading,
-						setHeading: setTitle,
-					}}
-				>
-					<Center height={"100svh"} position={"relative"}>
-						<Container maxWidth={"xl"} boxSize={"full"} padding={2}>
-							<Header heading={heading} />
+			<HeadingContext.Provider
+				value={{
+					heading: heading,
+					setHeading: setTitle,
+				}}
+			>
+				<Center bg={"red.50"}>
+					<Container
+						maxWidth={"3xl"}
+						minHeight={"svh"}
+						padding={2}
+						margin={0}
+						borderWidth={"1px"}
+						borderColor={"border"}
+						rounded={"md"}
+						position={"relative"}
+						display={"grid"}
+						gridTemplateRows={"auto 1fr auto"}
+						gap={6}
+					>
+						<Header heading={heading} />
 
-							<Outlet />
+						<Outlet />
 
-							<NavBar />
-						</Container>
-					</Center>
+						<NavBar />
+					</Container>
+				</Center>
 
-					{import.meta.env.DEV && <TanStackRouterDevtools />}
-				</HeadingContext.Provider>
-			</>
+				{import.meta.env.DEV && <TanStackRouterDevtools />}
+			</HeadingContext.Provider>
 		);
 	},
 });

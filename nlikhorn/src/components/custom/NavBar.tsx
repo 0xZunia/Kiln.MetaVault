@@ -12,7 +12,7 @@ export function NavBar() {
 	const isMobile = useBreakpointValue({ base: true, xl: false });
 
 	return (
-		<Container position={"absolute"} bottom={3} left={0}>
+		<Container zIndex={"sticky"} position={"sticky"} bottom={3} left={0}>
 			<HStack
 				justify={"space-around"}
 				paddingY={2}
