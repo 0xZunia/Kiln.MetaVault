@@ -5,14 +5,24 @@ import {
 	HStack,
 	useBreakpointValue,
 } from "@chakra-ui/react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { LuHouse, LuPiggyBank, LuVault } from "react-icons/lu";
 
 export function NavBar() {
 	const isMobile = useBreakpointValue({ base: true, xl: false });
 
+	const { pathname } = useLocation();
+
+	const isHere = (path: string) => path === pathname;
+
 	return (
-		<Container zIndex={"sticky"} position={"sticky"} bottom={3} left={0}>
+		<Container
+			zIndex={"sticky"}
+			position={"sticky"}
+			bottom={3}
+			left={0}
+			padding={0}
+		>
 			<HStack
 				justify={"space-around"}
 				paddingY={2}
@@ -26,15 +36,18 @@ export function NavBar() {
 			>
 				<ChakraLink asChild flex={1}>
 					<Link to="/">
-						<Button width={"full"}>
+						<Button width={"full"} colorPalette={isHere("/") ? "" : "gray"}>
 							<LuHouse /> {!isMobile && "Dashboard"}
 						</Button>
 					</Link>
 				</ChakraLink>
 
 				<ChakraLink asChild flex={2}>
-					<Link to="/">
-						<Button width={"full"}>
+					<Link to="/vault">
+						<Button
+							width={"full"}
+							colorPalette={isHere("/vault") ? "" : "gray"}
+						>
 							<LuVault /> {!isMobile && "MetaVault"}
 						</Button>
 					</Link>
@@ -42,7 +55,7 @@ export function NavBar() {
 
 				<ChakraLink asChild flex={1}>
 					<Link to="/earn">
-						<Button width={"full"}>
+						<Button width={"full"} colorPalette={isHere("/earn") ? "" : "gray"}>
 							<LuPiggyBank />
 							{!isMobile && "Earn"}
 						</Button>

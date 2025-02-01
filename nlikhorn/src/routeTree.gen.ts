@@ -11,10 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as VaultImport } from './routes/vault'
 import { Route as EarnImport } from './routes/earn'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const VaultRoute = VaultImport.update({
+  id: '/vault',
+  path: '/vault',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const EarnRoute = EarnImport.update({
   id: '/earn',
@@ -46,6 +53,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EarnImport
       parentRoute: typeof rootRoute
     }
+    '/vault': {
+      id: '/vault'
+      path: '/vault'
+      fullPath: '/vault'
+      preLoaderRoute: typeof VaultImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +68,41 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/earn': typeof EarnRoute
+  '/vault': typeof VaultRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/earn': typeof EarnRoute
+  '/vault': typeof VaultRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/earn': typeof EarnRoute
+  '/vault': typeof VaultRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/earn'
+  fullPaths: '/' | '/earn' | '/vault'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/earn'
-  id: '__root__' | '/' | '/earn'
+  to: '/' | '/earn' | '/vault'
+  id: '__root__' | '/' | '/earn' | '/vault'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EarnRoute: typeof EarnRoute
+  VaultRoute: typeof VaultRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EarnRoute: EarnRoute,
+  VaultRoute: VaultRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +116,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/earn"
+        "/earn",
+        "/vault"
       ]
     },
     "/": {
@@ -105,6 +125,9 @@ export const routeTree = rootRoute
     },
     "/earn": {
       "filePath": "earn.tsx"
+    },
+    "/vault": {
+      "filePath": "vault.tsx"
     }
   }
 }

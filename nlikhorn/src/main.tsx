@@ -1,4 +1,4 @@
-import { Provider } from "@/components/ui/provider";
+import { Provider as ChakraProvider } from "@/components/ui/provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import React from "react";
@@ -20,7 +20,7 @@ declare module "@tanstack/react-router" {
 const queryClient = new QueryClient();
 
 // Render the app
-const rootElement = document.getElementById("root")!;
+const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element not found");
 if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
@@ -28,9 +28,9 @@ if (!rootElement.innerHTML) {
 		<React.StrictMode>
 			<WagmiProvider config={config}>
 				<QueryClientProvider client={queryClient}>
-					<Provider>
+					<ChakraProvider>
 						<RouterProvider router={router} />
-					</Provider>
+					</ChakraProvider>
 				</QueryClientProvider>
 			</WagmiProvider>
 		</React.StrictMode>,
