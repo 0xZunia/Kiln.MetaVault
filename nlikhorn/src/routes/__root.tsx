@@ -14,14 +14,10 @@ export const Route = createRootRoute({
 					padding={2}
 					position={"relative"}
 				>
-					<Link to="/" className="[&.active]:font-bold">
-						Home
-					</Link>{" "}
-					<Link to="/earn" className="[&.active]:font-bold">
-						Earn
-					</Link>
 					<ColorModeButton />
+
 					<Outlet />
+
 					<NavBar />
 				</Container>
 			</Center>
