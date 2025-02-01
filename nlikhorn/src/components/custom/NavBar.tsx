@@ -1,4 +1,10 @@
-import { Container, HStack, IconButton } from "@chakra-ui/react";
+import {
+	Link as ChakraLink,
+	Container,
+	HStack,
+	IconButton,
+} from "@chakra-ui/react";
+import { Link } from "@tanstack/react-router";
 import { LuCheck, LuHouse, LuSearch } from "react-icons/lu";
 
 export function NavBar() {
