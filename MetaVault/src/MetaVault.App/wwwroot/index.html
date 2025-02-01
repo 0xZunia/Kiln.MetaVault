@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiln MetaVault Manager</title>
+    <base href="/" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link href="MetaVault.Web.styles.css" rel="stylesheet" />
+
+    <!-- Ethers.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.5/ethers.umd.min.js"
+            type="application/javascript">
+    </script>
+</head>
+
+<body>
+<div id="app">
+    <svg class="loading-progress">
+        <circle r="40%" cx="50%" cy="50%" />
+        <circle r="40%" cx="50%" cy="50%" />
+    </svg>
+    <div class="loading-progress-text"></div>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+<script>
+    function initWeb3Interop() {
+        window.web3Interop = {
+            SUPPORTED_CHAINS: {
+                11155111: {
+                    name: 'Sepolia',
+                    factoryAddress: 'YOUR_FACTORY_ADDRESS_ON_SEPOLIA',
+                    rpcUrl: 'https://sepolia.infura.io/v3/YOUR_INFURA_ID'
+                }
+            },
+
+            async init() {
+                if (typeof ethers === 'undefined') {
+                    console.error('Ethers.js not loaded in init!');
+                    return;
+                }
+                console.log("Web3 Interop initialized with ethers version:", ethers.version);
+
+                const network = await this.getNetwork();
+                console.log("Connected to network:", network);
+            },
+
+            async getNetwork() {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const network = await provider.getNetwork();
+                return {
+                    chainId: Number(network.chainId),
+                    name: network.name
+                };
+            },
+
+            async ensureSepoliaNetwork() {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const network = await provider.getNetwork();
+                const chainId = Number(network.chainId);
+
+                if (chainId !== 11155111) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0xaa36a7' }], // 11155111 in hex
+                        });
+                    } catch (error) {
+                        if (error.code === 4902) {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [
+                                    {
+                                        chainId: '0xaa36a7',
+                                        chainName: 'Sepolia',
+                                        nativeCurrency: {
+                                            name: 'ETH',
+                                            symbol: 'ETH',
+                                            decimals: 18
+                                        },
+                                        rpcUrls: ['https://sepolia.infura.io/v3/YOUR_INFURA_ID'],
+                                        blockExplorerUrls: ['https://sepolia.etherscan.io']
+                                    }
+                                ]
+                            });
+                        } else {
+                            throw error;
+                        }
+                    }
+                    return false;
+                }
+                return true;
+            },
+
+            async connectWallet() {
+                try {
+                    if (typeof window.ethereum === 'undefined') {
+                        throw new Error("MetaMask is not installed");
+                    }
+
+                    // S'assurer d'être sur Sepolia
+                    await this.ensureSepoliaNetwork();
+
+                    const accounts = await window.ethereum.request({
+                        method: 'eth_requestAccounts'
+                    });
+
+                    return accounts.length > 0;
+
+                } catch (error) {
+                    console.error("Error connecting wallet:", error);
+                    return false;
+                }
+            },
+
+            async getConnectedAddress() {
+                try {
+                    if (typeof window.ethereum === 'undefined') {
+                        return '';
+                    }
+
+                    const accounts = await window.ethereum.request({
+                        method: 'eth_accounts'
+                    });
+
+                    return accounts[0] || '';
+                } catch (error) {
+                    console.error("Error getting address:", error);
+                    return '';
+                }
+            },
+
+            async callContract(contractAddress, methodName, params) {
+                try {
+                    await this.ensureSepoliaNetwork();
+                    const provider = new ethers.BrowserProvider(window.ethereum);
+                    const signer = await provider.getSigner();
+
+                    const contract = new ethers.Contract(
+                        contractAddress,
+                        this.getContractABI(methodName),
+                        signer
+                    );
+
+                    const formattedParams = params?.map(param =>
+                        typeof param === 'string' && param.includes('0x')
+                            ? ethers.getAddress(param)
+                            : param
+                    ) || [];
+
+                    return await contract[methodName](...formattedParams);
+                } catch (error) {
+                    console.error(`Error calling ${methodName}:`, error);
+                    throw error;
+                }
+            },
+
+            async sendContractTransaction(contractAddress, methodName, params) {
+                try {
+                    await this.ensureSepoliaNetwork();
+                    const provider = new ethers.BrowserProvider(window.ethereum);
+                    const signer = await provider.getSigner();
+
+                    const contract = new ethers.Contract(
+                        contractAddress,
+                        this.getContractABI(methodName),
+                        signer
+                    );
+
+                    const formattedParams = params?.map(param =>
+                        typeof param === 'string' && param.includes('0x')
+                            ? ethers.getAddress(param)
+                            : param
+                    ) || [];
+
+                    const tx = await contract[methodName](...formattedParams);
+                    const receipt = await tx.wait();
+                    return receipt.hash;
+                } catch (error) {
+                    console.error(`Error in transaction ${methodName}:`, error);
+                    throw error;
+                }
+            },
+
+            getContractABI(methodName) {
+                const contractABIs = {
+                    metaVaultFactory: [
+                        "function createMetaVault() external returns (address)",
+                        "function hasMetaVault(address user) external view returns (bool)",
+                        "function getUserMetaVault(address user) external view returns (address)"
+                    ],
+                    metaVault: [
+                        "function updateAllocation(uint256 _vaultId, uint256 _newAllocation) external",
+                        "function getActiveVaults() external view returns (uint256[] memory ids, address[] memory addresses, uint256[] memory allocations)"
+                    ]
+                };
+
+                return methodName.includes('MetaVault') ?
+                    contractABIs.metaVaultFactory :
+                    contractABIs.metaVault;
+            }
+        };
+
+        // Initialize when loaded
+        window.web3Interop.init();
+    }
+</script>
+
+<script>
+    window.addEventListener('load', function() {
+        if (typeof ethers === 'undefined') {
+            console.error('Ethers.js not loaded!');
+        } else {
+            console.log('Ethers.js loaded successfully!');
+            initWeb3Interop();
+        }
+    });
+</script>
+
+<script src="_framework/blazor.webassembly.js"></script>
+</body>
+
+</html>
