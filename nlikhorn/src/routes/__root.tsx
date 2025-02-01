@@ -29,7 +29,7 @@ export const Route = createRootRoute({
 					setHeading: setTitle,
 				}}
 			>
-				<Center bg={"red.50"}>
+				<Center>
 					<Container
 						maxWidth={"3xl"}
 						minHeight={"svh"}
