@@ -38,8 +38,10 @@ export function Header() {
 				bgColor={"bg"}
 			>
 				<Heading>{title}</Heading>
-				<DisconnectButton />
-				<ColorModeButton />
+				<HStack>
+					<DisconnectButton />
+					<ColorModeButton />
+				</HStack>
 			</HStack>
 		</Container>
 	);
