@@ -1,5 +1,5 @@
 obj
 bin
 .idea
-.*
+.env
 hardhat
