@@ -5,7 +5,7 @@ import {
 	IconButton,
 } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
-import { LuCheck, LuHouse, LuSearch } from "react-icons/lu";
+import { LuHouse, LuPiggyBank, LuVault } from "react-icons/lu";
 
 export function NavBar() {
 	return (
@@ -30,9 +30,9 @@ export function NavBar() {
 				</ChakraLink>
 
 				<ChakraLink asChild>
-					<Link to="/search">
+					<Link to="/">
 						<IconButton>
-							<LuSearch />
+							<LuVault />
 						</IconButton>
 					</Link>
 				</ChakraLink>
@@ -40,7 +40,7 @@ export function NavBar() {
 				<ChakraLink asChild>
 					<Link to="/earn">
 						<IconButton>
-							<LuCheck />
+							<LuPiggyBank />
 						</IconButton>
 					</Link>
 				</ChakraLink>
