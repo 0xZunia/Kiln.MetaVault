@@ -1,7 +1,6 @@
 import { Skeleton } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useContext, useState } from "react";
-import { HeadingContext } from "./__root";
+import { useState } from "react";
 
 export const Route = createFileRoute("/earn")({
 	component: Earn,
@@ -24,9 +23,5 @@ const KilnWidget = ({ slug }: { slug: string }) => {
 };
 
 function Earn() {
-	const { setHeading } = useContext(HeadingContext);
-
-	setHeading("Earn");
-
 	return <KilnWidget slug="nlik" />;
 }

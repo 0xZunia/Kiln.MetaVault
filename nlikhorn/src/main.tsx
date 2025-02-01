@@ -1,4 +1,4 @@
-import { Provider } from "@/components/ui/provider";
+import { Provider as ChakraProvider } from "@/components/ui/provider";
 import React from "react";
 import ReactDOM from "react-dom/client";
 
@@ -23,9 +23,9 @@ if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<React.StrictMode>
-			<Provider>
+			<ChakraProvider>
 				<RouterProvider router={router} />
-			</Provider>
+			</ChakraProvider>
 		</React.StrictMode>,
 	);
 }

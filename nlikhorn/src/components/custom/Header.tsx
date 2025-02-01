@@ -1,10 +1,21 @@
 import { Container, HStack, Heading } from "@chakra-ui/react";
 import { ColorModeButton } from "../ui/color-mode";
-import { HeadingContext } from "@/routes/__root";
-import { useContext } from "react";
+import { useLocation } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+
+const pathToTitle: { [key: string]: string } = {
+	"/": "Dashboard",
+	"/earn": "Earn",
+	"/vault": "Vault",
+};
 
 export function Header() {
-	const { heading } = useContext(HeadingContext);
+	const { pathname } = useLocation();
+
+	const title = useMemo(() => pathToTitle[pathname], [pathname]);
+	useState(() => {
+		document.title = `Nlik'horne | ${title}`;
+	});
 
 	return (
 		<Container
@@ -25,7 +36,7 @@ export function Header() {
 				colorPalette={"orange"}
 				bgColor={"bg"}
 			>
-				<Heading>{heading}</Heading>
+				<Heading>{title}</Heading>
 				<ColorModeButton />
 			</HStack>
 		</Container>
