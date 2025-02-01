@@ -1,0 +1,249 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"add(bytes32,address)": "61641bdc",
+			"connectorExists(bytes32)": "da815abf",
+			"freeze(bytes32)": "ec13cc7b",
+			"get(bytes32)": "8eaa6ac0",
+			"getOrRevert(bytes32)": "5fbfeb46",
+			"pause(bytes32)": "ed56531a",
+			"pauseFor(bytes32,uint256)": "708e2975",
+			"paused(bytes32)": "9e9e4666",
+			"remove(bytes32)": "95bc2673",
+			"unPause(bytes32)": "8ac91be7",
+			"update(bytes32,address)": "4ae2ffc0"
+		}
+	},
+	"abi": [
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "connector",
+					"type": "address"
+				}
+			],
+			"name": "add",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				}
+			],
+			"name": "connectorExists",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				}
+			],
+			"name": "freeze",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				}
+			],
+			"name": "get",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				}
+			],
+			"name": "getOrRevert",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				}
+			],
+			"name": "pause",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "uint256",
+					"name": "duration",
+					"type": "uint256"
+				}
+			],
+			"name": "pauseFor",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				}
+			],
+			"name": "paused",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				}
+			],
+			"name": "remove",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				}
+			],
+			"name": "unPause",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "name",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "connector",
+					"type": "address"
+				}
+			],
+			"name": "update",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		}
+	]
+}

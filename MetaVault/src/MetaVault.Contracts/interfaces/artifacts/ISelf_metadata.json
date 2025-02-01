@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "_self",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"MetaVault/src/MetaVault.Contracts/interfaces/ISelf.sol": "ISelf"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"MetaVault/src/MetaVault.Contracts/interfaces/ISelf.sol": {
+			"keccak256": "0x501fb138a2d082877fd5c94222efed3899a8ae65dd373b449ed40fecfc35c497",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://d5f961d0bdb3c24896455b1f7eaba9acf36f2f889582996b207b60ab41951ed4",
+				"dweb:/ipfs/QmU6cCJUJKagwZzAXs7Dd1fLmzud5N9VZz7bjEvzYxz9Px"
+			]
+		}
+	},
+	"version": 1
+}

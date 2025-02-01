@@ -1,137 +1,320 @@
-pragma solidity ^0.8.20;
+// SPDX-License-Identifier: BUSL-1.1
+pragma solidity 0.8.22;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+// Contrats standards OpenZeppelin
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-interface IVault {
-    function deposit() external payable;
-    function withdraw(uint256 amount) external;
-    function getAPY() external view returns (uint256);
-    function balanceOf(address account) external view returns (uint256);
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+// Contrats upgradeable OpenZeppelin
+import {AccessControlDefaultAdminRulesUpgradeable} from
+    "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol";
+import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+// Contrats locaux
+import {Vault} from "./Vault.sol";
+
+/**
+ * @title PersonalMetaVault
+ * @notice Personal vault manager allowing users to manage their allocations across multiple Kiln vaults
+ */
+contract PersonalMetaVault is Initializable, ReentrancyGuardUpgradeable {
+    using SafeERC20 for IERC20;
+
+    struct VaultAllocation {
+        address vault;
+        uint256 allocation; // Allocation percentage in basis points (100 = 1%)
+        bool active;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  CONSTANTS                                   */
+    /* -------------------------------------------------------------------------- */
+
+    /// @notice Maximum basis points for 100%
+    uint256 public constant MAX_BPS = 10000;
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   STORAGE                                    */
+    /* -------------------------------------------------------------------------- */
+
+    /// @notice Owner of this personal meta vault
+    address public owner;
+
+    /// @notice Factory that deployed this vault
+    address public factory;
+
+    /// @notice Mapping of vault address to allocation data
+    mapping(address => VaultAllocation) public vaultAllocations;
+
+    /// @notice List of active vault addresses
+    address[] public activeVaults;
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   EVENTS                                     */
+    /* -------------------------------------------------------------------------- */
+
+    event VaultAdded(address indexed vault, uint256 allocation);
+    event VaultRemoved(address indexed vault);
+    event AllocationUpdated(address indexed vault, uint256 newAllocation);
+    event Rebalanced(address[] vaults, uint256[] allocations);
+    event Deposited(uint256 totalAmount, address[] vaults, uint256[] amounts);
+    event Withdrawn(uint256 totalAmount, address[] vaults, uint256[] amounts);
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   ERRORS                                     */
+    /* -------------------------------------------------------------------------- */
+
+    error Unauthorized();
+    error InvalidAllocation();
+    error VaultAlreadyAdded();
+    error VaultNotFound();
+    error AllocationTooHigh();
+    error TotalAllocationExceeded();
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  MODIFIERS                                   */
+    /* -------------------------------------------------------------------------- */
+
+    modifier onlyOwner() {
+        if(msg.sender != owner) revert Unauthorized();
+        _;
+    }
+
+    modifier onlyFactory() {
+        if(msg.sender != factory) revert Unauthorized();
+        _;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                               INITIALIZER                                    */
+    /* -------------------------------------------------------------------------- */
+
+    function initialize(address _owner) external initializer {
+        __ReentrancyGuard_init();
+        owner = _owner;
+        factory = msg.sender;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                             VAULT MANAGEMENT                                 */
+    /* -------------------------------------------------------------------------- */
+
+    /// @notice Add a new vault with allocation
+    /// @param vault Vault address to add
+    /// @param allocation Allocation percentage in basis points
+    function addVault(address vault, uint256 allocation) external onlyOwner {
+        if(vaultAllocations[vault].active) revert VaultAlreadyAdded();
+        if(allocation > MAX_BPS) revert AllocationTooHigh();
+
+        uint256 totalAllocation = getTotalAllocation() + allocation;
+        if(totalAllocation > MAX_BPS) revert TotalAllocationExceeded();
+
+        vaultAllocations[vault] = VaultAllocation({
+            vault: vault,
+            allocation: allocation,
+            active: true
+        });
+        activeVaults.push(vault);
+
+        emit VaultAdded(vault, allocation);
+    }
+
+    /// @notice Remove a vault
+    /// @param vault Vault address to remove
+    function removeVault(address vault) external onlyOwner {
+        if(!vaultAllocations[vault].active) revert VaultNotFound();
+
+        vaultAllocations[vault].active = false;
+        vaultAllocations[vault].allocation = 0;
+
+        // Remove from active vaults array
+        for(uint i = 0; i < activeVaults.length; i++) {
+            if(activeVaults[i] == vault) {
+                activeVaults[i] = activeVaults[activeVaults.length - 1];
+                activeVaults.pop();
+                break;
+            }
+        }
+
+        emit VaultRemoved(vault);
+    }
+
+    /// @notice Update allocation for a vault
+    /// @param vault Vault address to update
+    /// @param newAllocation New allocation percentage in basis points
+    function updateAllocation(address vault, uint256 newAllocation) external onlyOwner {
+        if(!vaultAllocations[vault].active) revert VaultNotFound();
+        if(newAllocation > MAX_BPS) revert AllocationTooHigh();
+
+        uint256 totalAllocation = getTotalAllocation() - vaultAllocations[vault].allocation + newAllocation;
+        if(totalAllocation > MAX_BPS) revert TotalAllocationExceeded();
+
+        vaultAllocations[vault].allocation = newAllocation;
+
+        emit AllocationUpdated(vault, newAllocation);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                            DEPOSIT/WITHDRAW LOGIC                            */
+    /* -------------------------------------------------------------------------- */
+
+    /// @notice Deposit funds according to current allocations
+    /// @param asset Asset to deposit
+    /// @param amount Total amount to deposit
+    function deposit(address asset, uint256 amount) external nonReentrant onlyOwner {
+        uint256 totalAllocation = getTotalAllocation();
+        if(totalAllocation == 0) revert InvalidAllocation();
+
+        uint256[] memory amounts = new uint256[](activeVaults.length);
+        uint256 remainingAmount = amount;
+
+        // Calculate and execute deposits based on allocations
+        for(uint i = 0; i < activeVaults.length; i++) {
+            address vault = activeVaults[i];
+            uint256 vaultAmount;
+
+            if(i == activeVaults.length - 1) {
+                vaultAmount = remainingAmount;
+            } else {
+                vaultAmount = (amount * vaultAllocations[vault].allocation) / totalAllocation;
+                remainingAmount -= vaultAmount;
+            }
+
+            amounts[i] = vaultAmount;
+
+            if(vaultAmount > 0) {
+                IERC20(asset).safeTransferFrom(msg.sender, address(this), vaultAmount);
+                IERC20(asset).approve(vault, vaultAmount);
+                Vault(vault).deposit(vaultAmount, owner);
+            }
+        }
+
+        emit Deposited(amount, activeVaults, amounts);
+    }
+
+    /// @notice Withdraw funds proportionally from all vaults
+    /// @param percentage Percentage of total funds to withdraw in basis points
+    function withdraw(uint256 percentage) external nonReentrant onlyOwner {
+        if(percentage == 0 || percentage > MAX_BPS) revert InvalidAllocation();
+
+        uint256[] memory amounts = new uint256[](activeVaults.length);
+
+        // Calculate and execute withdrawals
+        for(uint i = 0; i < activeVaults.length; i++) {
+            address vault = activeVaults[i];
+            uint256 vaultShares = IERC20(vault).balanceOf(owner);
+            uint256 withdrawAmount = (vaultShares * percentage) / MAX_BPS;
+
+            if(withdrawAmount > 0) {
+                amounts[i] = withdrawAmount;
+                Vault(vault).withdraw(withdrawAmount, owner, owner);
+            }
+        }
+
+        emit Withdrawn(percentage, activeVaults, amounts);
+    }
+
+    /// @notice Rebalance holdings to match current allocations
+    function rebalance() external nonReentrant onlyOwner {
+        uint256 totalAllocation = getTotalAllocation();
+        if(totalAllocation == 0) revert InvalidAllocation();
+
+        // Calculate total value across all vaults
+        uint256 totalValue;
+        for(uint i = 0; i < activeVaults.length; i++) {
+            address vault = activeVaults[i];
+            uint256 vaultShares = IERC20(vault).balanceOf(owner);
+            if(vaultShares > 0) {
+                totalValue += Vault(vault).convertToAssets(vaultShares);
+            }
+        }
+
+        if(totalValue == 0) return;
+
+        // Rebalance each vault
+        for(uint i = 0; i < activeVaults.length; i++) {
+            address vault = activeVaults[i];
+            uint256 targetValue = (totalValue * vaultAllocations[vault].allocation) / totalAllocation;
+            uint256 currentValue = Vault(vault).convertToAssets(IERC20(vault).balanceOf(owner));
+
+            if(targetValue > currentValue) {
+                // Need to deposit more
+                uint256 depositAmount = targetValue - currentValue;
+                IERC20(Vault(vault).asset()).safeTransferFrom(owner, address(this), depositAmount);
+                IERC20(Vault(vault).asset()).approve(vault, depositAmount);
+                Vault(vault).deposit(depositAmount, owner);
+            } else if(targetValue < currentValue) {
+                // Need to withdraw
+                uint256 withdrawAmount = currentValue - targetValue;
+                Vault(vault).withdraw(withdrawAmount, owner, owner);
+            }
+        }
+
+        emit Rebalanced(activeVaults, _getAllocations());
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   VIEWS                                      */
+    /* -------------------------------------------------------------------------- */
+
+    /// @notice Get total allocation across all active vaults
+    /// @return Total allocation in basis points
+    function getTotalAllocation() public view returns (uint256) {
+        uint256 total;
+        for(uint i = 0; i < activeVaults.length; i++) {
+            total += vaultAllocations[activeVaults[i]].allocation;
+        }
+        return total;
+    }
+
+    /// @notice Get all active vaults
+    /// @return Array of active vault addresses
+    function getActiveVaults() external view returns (address[] memory) {
+        return activeVaults;
+    }
+
+    /// @notice Helper to get current allocations
+    function _getAllocations() internal view returns (uint256[] memory) {
+        uint256[] memory allocations = new uint256[](activeVaults.length);
+        for(uint i = 0; i < activeVaults.length; i++) {
+            allocations[i] = vaultAllocations[activeVaults[i]].allocation;
+        }
+        return allocations;
+    }
 }
 
-contract MetaVault is Ownable {
-    struct VaultAllocation {
-        address vaultAddress;
-        uint256 allocation; // en basis points (100 = 1%)
-        bool isActive;
+/**
+ * @title PersonalMetaVaultFactory
+ * @notice Factory contract for deploying personal meta vaults
+ */
+contract PersonalMetaVaultFactory is AccessControlDefaultAdminRulesUpgradeable {
+    event MetaVaultCreated(address indexed owner, address metaVault);
+
+    mapping(address => address) public userMetaVaults;
+
+    function initialize(
+        address initialAdmin,
+        uint48 initialDelay
+    ) external initializer {
+        __AccessControlDefaultAdminRules_init(initialDelay, initialAdmin);
     }
 
-    mapping(uint256 => VaultAllocation) public vaults;
-    uint256[] public activeVaultIds;
+    /// @notice Create a new personal meta vault
+    function createMetaVault() external returns (address) {
+        require(userMetaVaults[msg.sender] == address(0), "Already has meta vault");
 
-    event AllocationUpdated(uint256 vaultId, uint256 newAllocation);
-    event VaultAdded(uint256 vaultId, address vaultAddress);
-    event VaultRemoved(uint256 vaultId);
-    event DepositDistributed(uint256 totalAmount);
-    event WithdrawalProcessed(uint256 totalAmount);
+        PersonalMetaVault metaVault = new PersonalMetaVault();
+        metaVault.initialize(msg.sender);
 
-    constructor() Ownable(msg.sender) {}
+        userMetaVaults[msg.sender] = address(metaVault);
 
-    // Permet d'ajouter un vault existant au système
-    function addVault(uint256 _vaultId, address _vaultAddress) external onlyOwner {
-        require(_vaultAddress != address(0), "Invalid vault address");
-        require(!vaults[_vaultId].isActive, "Vault ID already active");
-
-        // Vérifier que l'adresse est bien un contrat
-        require(_vaultAddress.code.length > 0, "Not a contract address");
-
-        vaults[_vaultId] = VaultAllocation({
-            vaultAddress: _vaultAddress,
-            allocation: 0,
-            isActive: true
-        });
-
-        activeVaultIds.push(_vaultId);
-        emit VaultAdded(_vaultId, _vaultAddress);
+        emit MetaVaultCreated(msg.sender, address(metaVault));
+        return address(metaVault);
     }
 
-    // Met à jour l'allocation pour un vault spécifique
-    function updateAllocation(uint256 _vaultId, uint256 _newAllocation) external onlyOwner {
-        require(vaults[_vaultId].isActive, "Vault not active");
-        require(_newAllocation <= 10000, "Allocation exceeds 100%");
-
-        uint256 totalAllocation = 0;
-        for (uint256 i = 0; i < activeVaultIds.length; i++) {
-            uint256 vaultId = activeVaultIds[i];
-            if (vaultId != _vaultId) {
-                totalAllocation += vaults[vaultId].allocation;
-            }
-        }
-
-        require(totalAllocation + _newAllocation <= 10000, "Total allocation would exceed 100%");
-
-        vaults[_vaultId].allocation = _newAllocation;
-        emit AllocationUpdated(_vaultId, _newAllocation);
-    }
-
-    // Distribue les ETH reçus selon les allocations
-    receive() external payable {
-        require(msg.value > 0, "No ETH sent");
-        _distributeDeposit(msg.value);
-    }
-
-    // Fonction interne pour distribuer les dépôts
-    function _distributeDeposit(uint256 _amount) internal {
-        uint256 remaining = _amount;
-        uint256 totalProcessed = 0;
-
-        for (uint256 i = 0; i < activeVaultIds.length; i++) {
-            uint256 vaultId = activeVaultIds[i];
-            VaultAllocation storage vault = vaults[vaultId];
-
-            if (vault.allocation > 0) {
-                uint256 vaultShare = (_amount * vault.allocation) / 10000;
-                if (vaultShare > 0) {
-                    IVault(vault.vaultAddress).deposit{value: vaultShare}();
-                    totalProcessed += vaultShare;
-                }
-            }
-        }
-
-        // Gérer la poussière d'ETH restante si nécessaire
-        if (totalProcessed < _amount) {
-            uint256 dust = _amount - totalProcessed;
-            if (dust > 0 && activeVaultIds.length > 0) {
-                // Envoyer la poussière au premier vault actif
-                IVault(vaults[activeVaultIds[0]].vaultAddress).deposit{value: dust}();
-            }
-        }
-
-        emit DepositDistributed(_amount);
-    }
-
-    // Retire des fonds d'un vault spécifique
-    function withdrawFromVault(uint256 _vaultId, uint256 _amount) external onlyOwner {
-        require(vaults[_vaultId].isActive, "Vault not active");
-        IVault vault = IVault(vaults[_vaultId].vaultAddress);
-        require(vault.balanceOf(address(this)) >= _amount, "Insufficient balance");
-
-        vault.withdraw(_amount);
-        emit WithdrawalProcessed(_amount);
-    }
-
-    // Retourne la liste des vaults actifs et leurs allocations
-    function getActiveVaults() external view returns (
-        uint256[] memory ids,
-        address[] memory addresses,
-        uint256[] memory allocations
-    ) {
-        uint256 length = activeVaultIds.length;
-        ids = new uint256[](length);
-        addresses = new address[](length);
-        allocations = new uint256[](length);
-
-        for (uint256 i = 0; i < length; i++) {
-            uint256 vaultId = activeVaultIds[i];
-            ids[i] = vaultId;
-            addresses[i] = vaults[vaultId].vaultAddress;
-            allocations[i] = vaults[vaultId].allocation;
-        }
-    }
-
-    // Retourne l'APY d'un vault spécifique
-    function getVaultAPY(uint256 _vaultId) external view returns (uint256) {
-        require(vaults[_vaultId].isActive, "Vault not active");
-        return IVault(vaults[_vaultId].vaultAddress).getAPY();
+    /// @notice Get user's meta vault
+    function getMetaVault(address user) external view returns (address) {
+        return userMetaVaults[user];
     }
 }

@@ -1,0 +1,334 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "connector",
+						"type": "address"
+					}
+				],
+				"name": "add",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "connectorExists",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "freeze",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "get",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "getOrRevert",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "pause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "duration",
+						"type": "uint256"
+					}
+				],
+				"name": "pauseFor",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "paused",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "remove",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "unPause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "connector",
+						"type": "address"
+					}
+				],
+				"name": "update",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "maximebrugel @ Kiln.",
+			"kind": "dev",
+			"methods": {
+				"add(bytes32,address)": {
+					"params": {
+						"connector": "The address of the connector.",
+						"name": "The name of the connector."
+					}
+				},
+				"connectorExists(bytes32)": {
+					"params": {
+						"name": "The name of the connector."
+					},
+					"returns": {
+						"_0": "True if the connector exists, false if not."
+					}
+				},
+				"freeze(bytes32)": {
+					"details": "A connector can't be unfrozen.",
+					"params": {
+						"name": "The name of the connector."
+					}
+				},
+				"get(bytes32)": {
+					"params": {
+						"name": "The name of the connector."
+					}
+				},
+				"getOrRevert(bytes32)": {
+					"details": "revert if the connector is paused.",
+					"params": {
+						"name": "The name of the connector."
+					}
+				},
+				"pause(bytes32)": {
+					"params": {
+						"name": "The name of the connector."
+					}
+				},
+				"pauseFor(bytes32,uint256)": {
+					"details": "Cannot decrease the current pauseTimestamp of the connector.",
+					"params": {
+						"duration": "The duration until which the connector is paused.",
+						"name": "The name of the connector."
+					}
+				},
+				"paused(bytes32)": {
+					"params": {
+						"name": "The name of the connector."
+					},
+					"returns": {
+						"_0": "True if the connector is paused, false if not."
+					}
+				},
+				"remove(bytes32)": {
+					"details": "A connector can't be removed if it is frozen.",
+					"params": {
+						"name": "The name of the connector."
+					}
+				},
+				"unPause(bytes32)": {
+					"params": {
+						"name": "The name of the connector."
+					}
+				},
+				"update(bytes32,address)": {
+					"details": "A connector can't be updated if it is frozen.",
+					"params": {
+						"connector": "The address of the connector.",
+						"name": "The name of the connector."
+					}
+				}
+			},
+			"title": "ConnectorRegistry Interface.",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"add(bytes32,address)": {
+					"notice": "Adds a connector to the registry."
+				},
+				"connectorExists(bytes32)": {
+					"notice": "Check if a connector exists."
+				},
+				"freeze(bytes32)": {
+					"notice": "Freezes a connector."
+				},
+				"get(bytes32)": {
+					"notice": "Get the address of a connector."
+				},
+				"getOrRevert(bytes32)": {
+					"notice": "Get the address of a connector or revert if it is paused."
+				},
+				"pause(bytes32)": {
+					"notice": "Pauses a connector for an unspecified amount of time."
+				},
+				"pauseFor(bytes32,uint256)": {
+					"notice": "Pauses a connector for a specified amount of time."
+				},
+				"paused(bytes32)": {
+					"notice": "Checks if a connector is paused."
+				},
+				"remove(bytes32)": {
+					"notice": "Removes a connector from the registry."
+				},
+				"unPause(bytes32)": {
+					"notice": "Unpauses a connector."
+				},
+				"update(bytes32,address)": {
+					"notice": "Updates a connector in the registry."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"MetaVault/src/MetaVault.Contracts/interfaces/IConnectorRegistry.sol": "IConnectorRegistry"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"MetaVault/src/MetaVault.Contracts/interfaces/IConnectorRegistry.sol": {
+			"keccak256": "0x58cc9af1736329170cac8c39a5cbad5c37d2a766ae85e8d647bc4212f9b09b57",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://60fa3dbaebf1a78e49a1f6eb0f712b9825f49543b454a14c0819c4d9dfd26afb",
+				"dweb:/ipfs/QmbnW6NmcUbsQ3RBRyUYmWsxnWykuXhCieozhUQC9VG1x3"
+			]
+		}
+	},
+	"version": 1
+}

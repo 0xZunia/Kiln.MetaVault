@@ -1,0 +1,115 @@
+{
+	"id": "c67bc6bf745f74962a00c05f646744ad",
+	"_format": "hh-sol-build-info-1",
+	"solcVersion": "0.8.22",
+	"solcLongVersion": "0.8.22+commit.4fc1097e",
+	"input": {
+		"language": "Solidity",
+		"sources": {
+			"MetaVault/src/MetaVault.Contracts/libraries/Constants.sol": {
+				"content": "// SPDX-License-Identifier: BUSL-1.1\n// SPDX-FileCopyrightText: 2024 Kiln <contact@kiln.fi>\n//\n// ██╗  ██╗██╗██╗     ███╗   ██╗\n// ██║ ██╔╝██║██║     ████╗  ██║\n// █████╔╝ ██║██║     ██╔██╗ ██║\n// ██╔═██╗ ██║██║     ██║╚██╗██║\n// ██║  ██╗██║███████╗██║ ╚████║\n// ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═══╝\n//\npragma solidity 0.8.22;\n\n/// @dev Represents the maximum percentage value in calculations.\n///      This constant is used as a scaling factor for percentage-based computations.\nuint256 constant _MAX_PERCENT = 100;"
+			}
+		},
+		"settings": {
+			"optimizer": {
+				"enabled": false,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"": [
+						"ast"
+					],
+					"*": [
+						"abi",
+						"metadata",
+						"devdoc",
+						"userdoc",
+						"storageLayout",
+						"evm.legacyAssembly",
+						"evm.bytecode",
+						"evm.deployedBytecode",
+						"evm.methodIdentifiers",
+						"evm.gasEstimates",
+						"evm.assembly"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"output": {
+		"sources": {
+			"MetaVault/src/MetaVault.Contracts/libraries/Constants.sol": {
+				"ast": {
+					"absolutePath": "MetaVault/src/MetaVault.Contracts/libraries/Constants.sol",
+					"exportedSymbols": {
+						"_MAX_PERCENT": [
+							5
+						]
+					},
+					"id": 6,
+					"license": "BUSL-1.1",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 1,
+							"literals": [
+								"solidity",
+								"0.8",
+								".22"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "568:23:0"
+						},
+						{
+							"constant": true,
+							"id": 5,
+							"mutability": "constant",
+							"name": "_MAX_PERCENT",
+							"nameLocation": "762:12:0",
+							"nodeType": "VariableDeclaration",
+							"scope": 6,
+							"src": "745:35:0",
+							"stateVariable": false,
+							"storageLocation": "default",
+							"typeDescriptions": {
+								"typeIdentifier": "t_uint256",
+								"typeString": "uint256"
+							},
+							"typeName": {
+								"id": 3,
+								"name": "uint256",
+								"nodeType": "ElementaryTypeName",
+								"src": "745:7:0",
+								"typeDescriptions": {
+									"typeIdentifier": "t_uint256",
+									"typeString": "uint256"
+								}
+							},
+							"value": {
+								"hexValue": "313030",
+								"id": 4,
+								"isConstant": false,
+								"isLValue": false,
+								"isPure": true,
+								"kind": "number",
+								"lValueRequested": false,
+								"nodeType": "Literal",
+								"src": "777:3:0",
+								"typeDescriptions": {
+									"typeIdentifier": "t_rational_100_by_1",
+									"typeString": "int_const 100"
+								},
+								"value": "100"
+							},
+							"visibility": "internal"
+						}
+					],
+					"src": "568:213:0"
+				},
+				"id": 0
+			}
+		}
+	}
+}

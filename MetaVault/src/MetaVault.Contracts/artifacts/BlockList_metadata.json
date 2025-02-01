@@ -1,0 +1,1176 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "AccessControlBadConfirmation",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint48",
+						"name": "schedule",
+						"type": "uint48"
+					}
+				],
+				"name": "AccessControlEnforcedDefaultAdminDelay",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "AccessControlEnforcedDefaultAdminRules",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "defaultAdmin",
+						"type": "address"
+					}
+				],
+				"name": "AccessControlInvalidDefaultAdmin",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "neededRole",
+						"type": "bytes32"
+					}
+				],
+				"name": "AccessControlUnauthorizedAccount",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "AddressNotBlocked",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "AddressNotContract",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "InvalidInitialization",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NotDelegateCall",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NotInitializing",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "bits",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "SafeCastOverflowedUintDowncast",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "addrs",
+						"type": "address"
+					}
+				],
+				"name": "AddedToBlockList",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [],
+				"name": "DefaultAdminDelayChangeCanceled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint48",
+						"name": "newDelay",
+						"type": "uint48"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint48",
+						"name": "effectSchedule",
+						"type": "uint48"
+					}
+				],
+				"name": "DefaultAdminDelayChangeScheduled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [],
+				"name": "DefaultAdminTransferCanceled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint48",
+						"name": "acceptSchedule",
+						"type": "uint48"
+					}
+				],
+				"name": "DefaultAdminTransferScheduled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "version",
+						"type": "uint64"
+					}
+				],
+				"name": "Initialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "NameInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "addrs",
+						"type": "address"
+					}
+				],
+				"name": "RemovedFromBlockList",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "previousAdminRole",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "newAdminRole",
+						"type": "bytes32"
+					}
+				],
+				"name": "RoleAdminChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleGranted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleRevoked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "contract ISanctionsList",
+						"name": "underlyingSanctionsList",
+						"type": "address"
+					}
+				],
+				"name": "UnderlyingSanctionListInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "contract ISanctionsList",
+						"name": "newUnderlyingSanctionsList",
+						"type": "address"
+					}
+				],
+				"name": "UnderlyingSanctionsListUpdated",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "DEFAULT_ADMIN_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "OPERATOR_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "acceptDefaultAdminTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "addrs",
+						"type": "address[]"
+					}
+				],
+				"name": "addToBlockList",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "beginDefaultAdminTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "cancelDefaultAdminTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint48",
+						"name": "newDelay",
+						"type": "uint48"
+					}
+				],
+				"name": "changeDefaultAdminDelay",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "defaultAdmin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "defaultAdminDelay",
+				"outputs": [
+					{
+						"internalType": "uint48",
+						"name": "",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "defaultAdminDelayIncreaseWait",
+				"outputs": [
+					{
+						"internalType": "uint48",
+						"name": "",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleAdmin",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "grantRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "hasRole",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "name_",
+								"type": "string"
+							},
+							{
+								"internalType": "contract ISanctionsList",
+								"name": "underlyingSanctionsList_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialDefaultAdmin_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialOperator_",
+								"type": "address"
+							},
+							{
+								"internalType": "uint48",
+								"name": "initialDelay_",
+								"type": "uint48"
+							}
+						],
+						"internalType": "struct BlockList.InitializationParams",
+						"name": "params",
+						"type": "tuple"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "isBlocked",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "isBlockedByInternalList",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "isSanctionedByUnderlyingList",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pendingDefaultAdmin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					},
+					{
+						"internalType": "uint48",
+						"name": "schedule",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pendingDefaultAdminDelay",
+				"outputs": [
+					{
+						"internalType": "uint48",
+						"name": "newDelay",
+						"type": "uint48"
+					},
+					{
+						"internalType": "uint48",
+						"name": "schedule",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "addrs",
+						"type": "address[]"
+					}
+				],
+				"name": "removeFromBlockList",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "renounceRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "revokeRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rollbackDefaultAdminDelay",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISanctionsList",
+						"name": "newUnderlyingSanctionsList",
+						"type": "address"
+					}
+				],
+				"name": "setUnderlyingSanctionsList",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "underlyingSanctionsList",
+				"outputs": [
+					{
+						"internalType": "contract ISanctionsList",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "isma @ Kiln.",
+			"errors": {
+				"AccessControlBadConfirmation()": [
+					{
+						"details": "The caller of a function is not the expected one. NOTE: Don't confuse with {AccessControlUnauthorizedAccount}."
+					}
+				],
+				"AccessControlEnforcedDefaultAdminDelay(uint48)": [
+					{
+						"details": "The delay for transferring the default admin delay is enforced and the operation must wait until `schedule`. NOTE: `schedule` can be 0 indicating there's no transfer scheduled."
+					}
+				],
+				"AccessControlEnforcedDefaultAdminRules()": [
+					{
+						"details": "At least one of the following rules was violated: - The `DEFAULT_ADMIN_ROLE` must only be managed by itself. - The `DEFAULT_ADMIN_ROLE` must only be held by one account at the time. - Any `DEFAULT_ADMIN_ROLE` transfer must be in two delayed steps."
+					}
+				],
+				"AccessControlInvalidDefaultAdmin(address)": [
+					{
+						"details": "The new default admin is not a valid default admin."
+					}
+				],
+				"AccessControlUnauthorizedAccount(address,bytes32)": [
+					{
+						"details": "The `account` is missing a role."
+					}
+				],
+				"AddressNotBlocked(address)": [
+					{
+						"details": "Error emitted when the address removed is not blocked.",
+						"params": {
+							"addr": "The address that was attempted to be removed."
+						}
+					}
+				],
+				"AddressNotContract(address)": [
+					{
+						"details": "Error emitted when the address is not a contract.",
+						"params": {
+							"addr": "The address that was attempted to be used as a contract."
+						}
+					}
+				],
+				"InvalidInitialization()": [
+					{
+						"details": "The contract is already initialized."
+					}
+				],
+				"NotDelegateCall()": [
+					{
+						"details": "Error emitted when a call is not a delegate call."
+					}
+				],
+				"NotInitializing()": [
+					{
+						"details": "The contract is not initializing."
+					}
+				],
+				"SafeCastOverflowedUintDowncast(uint8,uint256)": [
+					{
+						"details": "Value doesn't fit in an uint of `bits` size."
+					}
+				]
+			},
+			"events": {
+				"AddedToBlockList(address)": {
+					"details": "Emitted when addresses are added to the blocklist.",
+					"params": {
+						"addrs": "The addresses added."
+					}
+				},
+				"DefaultAdminDelayChangeCanceled()": {
+					"details": "Emitted when a {pendingDefaultAdminDelay} is reset if its schedule didn't pass."
+				},
+				"DefaultAdminDelayChangeScheduled(uint48,uint48)": {
+					"details": "Emitted when a {defaultAdminDelay} change is started, setting `newDelay` as the next delay to be applied between default admin transfer after `effectSchedule` has passed."
+				},
+				"DefaultAdminTransferCanceled()": {
+					"details": "Emitted when a {pendingDefaultAdmin} is reset if it was never accepted, regardless of its schedule."
+				},
+				"DefaultAdminTransferScheduled(address,uint48)": {
+					"details": "Emitted when a {defaultAdmin} transfer is started, setting `newAdmin` as the next address to become the {defaultAdmin} by calling {acceptDefaultAdminTransfer} only after `acceptSchedule` passes."
+				},
+				"Initialized(uint64)": {
+					"details": "Triggered when the contract has been initialized or reinitialized."
+				},
+				"NameInitialized(string)": {
+					"details": "Emitted when the name is initialized.",
+					"params": {
+						"name": "The name of the blocklist."
+					}
+				},
+				"RemovedFromBlockList(address)": {
+					"details": "Emitted when addresses are removed from the blocklist.",
+					"params": {
+						"addrs": "The addresses removed."
+					}
+				},
+				"RoleAdminChanged(bytes32,bytes32,bytes32)": {
+					"details": "Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole` `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite {RoleAdminChanged} not being emitted signaling this."
+				},
+				"RoleGranted(bytes32,address,address)": {
+					"details": "Emitted when `account` is granted `role`. `sender` is the account that originated the contract call. This account bears the admin role (for the granted role). Expected in cases where the role was granted using the internal {AccessControl-_grantRole}."
+				},
+				"RoleRevoked(bytes32,address,address)": {
+					"details": "Emitted when `account` is revoked `role`. `sender` is the account that originated the contract call:   - if using `revokeRole`, it is the admin role bearer   - if using `renounceRole`, it is the role bearer (i.e. `account`)"
+				},
+				"UnderlyingSanctionListInitialized(address)": {
+					"details": "Emitted when the sanctions list is initialized.",
+					"params": {
+						"underlyingSanctionsList": "The underlying sanctions list."
+					}
+				},
+				"UnderlyingSanctionsListUpdated(address)": {
+					"details": "Emitted when the underlying sanctions list is updated.",
+					"params": {
+						"newUnderlyingSanctionsList": "The new underlying sanctions list."
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"acceptDefaultAdminTransfer()": {
+					"details": "Completes a {defaultAdmin} transfer previously started with {beginDefaultAdminTransfer}. After calling the function: - `DEFAULT_ADMIN_ROLE` should be granted to the caller. - `DEFAULT_ADMIN_ROLE` should be revoked from the previous holder. - {pendingDefaultAdmin} should be reset to zero values. Requirements: - Only can be called by the {pendingDefaultAdmin}'s `newAdmin`. - The {pendingDefaultAdmin}'s `acceptSchedule` should've passed."
+				},
+				"addToBlockList(address[])": {
+					"params": {
+						"addrs": "The addresses to add."
+					}
+				},
+				"beginDefaultAdminTransfer(address)": {
+					"details": "Starts a {defaultAdmin} transfer by setting a {pendingDefaultAdmin} scheduled for acceptance after the current timestamp plus a {defaultAdminDelay}. Requirements: - Only can be called by the current {defaultAdmin}. Emits a DefaultAdminRoleChangeStarted event."
+				},
+				"cancelDefaultAdminTransfer()": {
+					"details": "Cancels a {defaultAdmin} transfer previously started with {beginDefaultAdminTransfer}. A {pendingDefaultAdmin} not yet accepted can also be cancelled with this function. Requirements: - Only can be called by the current {defaultAdmin}. May emit a DefaultAdminTransferCanceled event."
+				},
+				"changeDefaultAdminDelay(uint48)": {
+					"details": "Initiates a {defaultAdminDelay} update by setting a {pendingDefaultAdminDelay} scheduled for getting into effect after the current timestamp plus a {defaultAdminDelay}. This function guarantees that any call to {beginDefaultAdminTransfer} done between the timestamp this method is called and the {pendingDefaultAdminDelay} effect schedule will use the current {defaultAdminDelay} set before calling. The {pendingDefaultAdminDelay}'s effect schedule is defined in a way that waiting until the schedule and then calling {beginDefaultAdminTransfer} with the new delay will take at least the same as another {defaultAdmin} complete transfer (including acceptance). The schedule is designed for two scenarios: - When the delay is changed for a larger one the schedule is `block.timestamp + newDelay` capped by {defaultAdminDelayIncreaseWait}. - When the delay is changed for a shorter one, the schedule is `block.timestamp + (current delay - new delay)`. A {pendingDefaultAdminDelay} that never got into effect will be canceled in favor of a new scheduled change. Requirements: - Only can be called by the current {defaultAdmin}. Emits a DefaultAdminDelayChangeScheduled event and may emit a DefaultAdminDelayChangeCanceled event."
+				},
+				"defaultAdmin()": {
+					"details": "Returns the address of the current `DEFAULT_ADMIN_ROLE` holder."
+				},
+				"defaultAdminDelay()": {
+					"details": "Returns the delay required to schedule the acceptance of a {defaultAdmin} transfer started. This delay will be added to the current timestamp when calling {beginDefaultAdminTransfer} to set the acceptance schedule. NOTE: If a delay change has been scheduled, it will take effect as soon as the schedule passes, making this function returns the new delay. See {changeDefaultAdminDelay}."
+				},
+				"defaultAdminDelayIncreaseWait()": {
+					"details": "Maximum time in seconds for an increase to {defaultAdminDelay} (that is scheduled using {changeDefaultAdminDelay}) to take effect. Default to 5 days. When the {defaultAdminDelay} is scheduled to be increased, it goes into effect after the new delay has passed with the purpose of giving enough time for reverting any accidental change (i.e. using milliseconds instead of seconds) that may lock the contract. However, to avoid excessive schedules, the wait is capped by this function and it can be overrode for a custom {defaultAdminDelay} increase scheduling. IMPORTANT: Make sure to add a reasonable amount of time while overriding this value, otherwise, there's a risk of setting a high new delay that goes into effect almost immediately without the possibility of human intervention in the case of an input error (eg. set milliseconds instead of seconds)."
+				},
+				"getRoleAdmin(bytes32)": {
+					"details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
+				},
+				"grantRole(bytes32,address)": {
+					"details": "See {AccessControl-grantRole}. Reverts for `DEFAULT_ADMIN_ROLE`."
+				},
+				"hasRole(bytes32,address)": {
+					"details": "Returns `true` if `account` has been granted `role`."
+				},
+				"initialize((string,address,address,address,uint48))": {
+					"params": {
+						"params": "The initialization parameters."
+					}
+				},
+				"isBlocked(address)": {
+					"params": {
+						"addr": "The address to check."
+					},
+					"returns": {
+						"_0": "True if the address is blocked, false otherwise."
+					}
+				},
+				"isBlockedByInternalList(address)": {
+					"params": {
+						"addr": "The address to check."
+					},
+					"returns": {
+						"_0": "True if the address is blocked by the internal list, false otherwise."
+					}
+				},
+				"isSanctionedByUnderlyingList(address)": {
+					"params": {
+						"addr": "The address to check."
+					},
+					"returns": {
+						"_0": "True if the address is sanctioned by underlying list, false otherwise."
+					}
+				},
+				"name()": {
+					"returns": {
+						"_0": "The name of the blocklist."
+					}
+				},
+				"owner()": {
+					"details": "See {IERC5313-owner}."
+				},
+				"pendingDefaultAdmin()": {
+					"details": "Returns a tuple of a `newAdmin` and an accept schedule. After the `schedule` passes, the `newAdmin` will be able to accept the {defaultAdmin} role by calling {acceptDefaultAdminTransfer}, completing the role transfer. A zero value only in `acceptSchedule` indicates no pending admin transfer. NOTE: A zero address `newAdmin` means that {defaultAdmin} is being renounced."
+				},
+				"pendingDefaultAdminDelay()": {
+					"details": "Returns a tuple of `newDelay` and an effect schedule. After the `schedule` passes, the `newDelay` will get into effect immediately for every new {defaultAdmin} transfer started with {beginDefaultAdminTransfer}. A zero value only in `effectSchedule` indicates no pending delay change. NOTE: A zero value only for `newDelay` means that the next {defaultAdminDelay} will be zero after the effect schedule."
+				},
+				"removeFromBlockList(address[])": {
+					"params": {
+						"addrs": "The addresses to remove."
+					}
+				},
+				"renounceRole(bytes32,address)": {
+					"details": "See {AccessControl-renounceRole}. For the `DEFAULT_ADMIN_ROLE`, it only allows renouncing in two steps by first calling {beginDefaultAdminTransfer} to the `address(0)`, so it's required that the {pendingDefaultAdmin} schedule has also passed when calling this function. After its execution, it will not be possible to call `onlyRole(DEFAULT_ADMIN_ROLE)` functions. NOTE: Renouncing `DEFAULT_ADMIN_ROLE` will leave the contract without a {defaultAdmin}, thereby disabling any functionality that is only available for it, and the possibility of reassigning a non-administrated role."
+				},
+				"revokeRole(bytes32,address)": {
+					"details": "See {AccessControl-revokeRole}. Reverts for `DEFAULT_ADMIN_ROLE`."
+				},
+				"rollbackDefaultAdminDelay()": {
+					"details": "Cancels a scheduled {defaultAdminDelay} change. Requirements: - Only can be called by the current {defaultAdmin}. May emit a DefaultAdminDelayChangeCanceled event."
+				},
+				"setUnderlyingSanctionsList(address)": {
+					"params": {
+						"newUnderlyingSanctionsList": "The new underlying sanctions list."
+					}
+				},
+				"supportsInterface(bytes4)": {
+					"details": "See {IERC165-supportsInterface}."
+				},
+				"underlyingSanctionsList()": {
+					"returns": {
+						"_0": "The underlying sanctions list."
+					}
+				}
+			},
+			"stateVariables": {
+				"BlockListStorageLocation": {
+					"details": "The storage slot of the BlockListStorage struct in the proxy contract.      keccak256(abi.encode(uint256(keccak256(\"kiln.storage.blockList\")) - 1)) & ~bytes32(uint256(0xff))"
+				},
+				"_self": {
+					"details": "The address of the implementation (regardless of the context)."
+				}
+			},
+			"title": "Kiln DeFi Integration blocklist.",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"OPERATOR_ROLE()": {
+					"notice": "The role code for the operator."
+				},
+				"addToBlockList(address[])": {
+					"notice": "Add addresses to the blocklist."
+				},
+				"initialize((string,address,address,address,uint48))": {
+					"notice": "Initializes the contract in the proxy context."
+				},
+				"isBlocked(address)": {
+					"notice": "Check if an address is blocked (internal + underlying lists)."
+				},
+				"isBlockedByInternalList(address)": {
+					"notice": "Check if an address is blocked by the internal list (sanctions list excluded)."
+				},
+				"isSanctionedByUnderlyingList(address)": {
+					"notice": "Check if an address is sanctioned by the underlying list (internal blocklist excluded)."
+				},
+				"name()": {
+					"notice": "Returns the name of the blocklist."
+				},
+				"removeFromBlockList(address[])": {
+					"notice": "Remove addresses from the blocklist."
+				},
+				"setUnderlyingSanctionsList(address)": {
+					"notice": "Set the underlying sanctions list."
+				},
+				"underlyingSanctionsList()": {
+					"notice": "Returns the underlying sanctions list."
+				}
+			},
+			"notice": "Blocklist to prevent a set of users to interact with the vaults.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"MetaVault/src/MetaVault.Contracts/BlockList.sol": "BlockList"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol": {
+			"keccak256": "0x6662ec4e5cefca03eeadd073e9469df8d2944bb2ee8ec8f7622c2c46aab5f225",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4d8544c6f8daa4d1bc215c6a72fe0acdb748664a105b0e5efc19295667521d45",
+				"dweb:/ipfs/QmdGWqdnXT8S3RgCR6aV8XHZrsybieMQLLnug1NtpSjEXN"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol": {
+			"keccak256": "0x956cbd3e346c8ff9b9e51b6e414f23b056198016f805eb04c6634946a10760af",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d2b6578d7ddfb0bf8c00edf3d21fa1f8063c41a2d478eef2a0f04ee0900e9c5e",
+				"dweb:/ipfs/QmahbtHqGXJxthFT7oiZCkQfw7cezVAZpkWdrhS9xWZ9xy"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol": {
+			"keccak256": "0x631188737069917d2f909d29ce62c4d48611d326686ba6683e26b72a23bfac0b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7a61054ae84cd6c4d04c0c4450ba1d6de41e27e0a2c4f1bcdf58f796b401c609",
+				"dweb:/ipfs/QmUvtdp7X1mRVyC3CsHrtPbgoqWaXHp3S1ZR24tpAQYJWM"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol": {
+			"keccak256": "0xdbef5f0c787055227243a7318ef74c8a5a1108ca3a07f2b3a00ef67769e1e397",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://08e39f23d5b4692f9a40803e53a8156b72b4c1f9902a88cd65ba964db103dab9",
+				"dweb:/ipfs/QmPKn6EYDgpga7KtpkA8wV2yJCYGMtc9K4LkJfhKX2RVSV"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol": {
+			"keccak256": "0xc8ed8d2056934b7675b695dec032f2920c2f5c6cf33a17ca85650940675323ab",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3c8ccc75d1cd792d192aa09e54dd49ea35fe85baa9fcd17486f29227d9f29b89",
+				"dweb:/ipfs/QmbboSbFUEiM9tdEgBwuTRb7bykFoJXZ7dsSr1PSREJXMr"
+			]
+		},
+		"@openzeppelin/contracts/access/IAccessControl.sol": {
+			"keccak256": "0xc1c2a7f1563b77050dc6d507db9f4ada5d042c1f6a9ddbffdc49c77cdc0a1606",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fd54abb96a6156d9a761f6fdad1d3004bc48d2d4fce47f40a3f91a7ae83fc3a1",
+				"dweb:/ipfs/QmUrFSGkTDJ7WaZ6qPVVe3Gn5uN2viPb7x7QQ35UX4DofX"
+			]
+		},
+		"@openzeppelin/contracts/access/extensions/IAccessControlDefaultAdminRules.sol": {
+			"keccak256": "0x094d9bafd5008e2e3b53e40b0ca75173cec4e2c81cf2572ddbef07d375976580",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://caa28b73830478c39706023a757ce6cc138c396d94300fbcc927998a139f8b7e",
+				"dweb:/ipfs/QmYVS9731qEJhuMMsU6vqrkdGxq2pxdXcvmtGTNSntAsAE"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC5313.sol": {
+			"keccak256": "0x22412c268e74cc3cbf550aecc2f7456f6ac40783058e219cfe09f26f4d396621",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0b841021f25480424d2359de4869e60e77f790f52e8e85f07aa389543024b559",
+				"dweb:/ipfs/QmV7U5ehV5xe3QrbE8ErxfWSSzK1T1dGeizXvYPjWpNDGq"
+			]
+		},
+		"@openzeppelin/contracts/proxy/utils/Initializable.sol": {
+			"keccak256": "0x631188737069917d2f909d29ce62c4d48611d326686ba6683e26b72a23bfac0b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7a61054ae84cd6c4d04c0c4450ba1d6de41e27e0a2c4f1bcdf58f796b401c609",
+				"dweb:/ipfs/QmUvtdp7X1mRVyC3CsHrtPbgoqWaXHp3S1ZR24tpAQYJWM"
+			]
+		},
+		"@openzeppelin/contracts/utils/Panic.sol": {
+			"keccak256": "0xf7fe324703a64fc51702311dc51562d5cb1497734f074e4f483bfb6717572d7a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c6a5ff4f9fd8649b7ee20800b7fa387d3465bd77cf20c2d1068cd5c98e1ed57a",
+				"dweb:/ipfs/QmVSaVJf9FXFhdYEYeCEfjMVHrxDh5qL4CGkxdMWpQCrqG"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x79796192ec90263f21b464d5bc90b777a525971d3de8232be80d9c4f9fb353b8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
+				"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/Math.sol": {
+			"keccak256": "0xa00be322d7db5786750ce0ac7e2f5b633ac30a5ed5fa1ced1e74acfc19acecea",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6c84e822f87cbdc4082533b626667b6928715bb2b1e8e7eb96954cebb9e38c8d",
+				"dweb:/ipfs/QmZmy9dgxLTerBAQDuuHqbL6EpgRxddqgv5KmwpXYVbKz1"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/SafeCast.sol": {
+			"keccak256": "0x195533c86d0ef72bcc06456a4f66a9b941f38eb403739b00f21fd7c1abd1ae54",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b1d578337048cad08c1c03041cca5978eff5428aa130c781b271ad9e5566e1f8",
+				"dweb:/ipfs/QmPFKL2r9CBsMwmUqqdcFPfHZB2qcs9g1HDrPxzWSxomvy"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/BlockList.sol": {
+			"keccak256": "0x6d74489d22bba5b81dd4f11c20e329b9ef58382f0dddb80c0c79d99636aaeca9",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://c14aa5d100a8e0860ee31b462bcd9ec0ad37e9102074a82fcc305af19d2e7d29",
+				"dweb:/ipfs/QmUQJbvQ8tx7AKgbKjpvg7MpNzX2pf9svVaquqJ25Evnhb"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/interfaces/ISanctionsList.sol": {
+			"keccak256": "0xe2565a976f513c6fe4c1a4a27a50280ae1528011c2019ff1136aedf0936a9701",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://8ee56158e15a7f3a75c87800ca58e64989ef07aae6ae0f3a970636537ab6169e",
+				"dweb:/ipfs/QmR99B8QhHRroiL6kWuk9o1XdpXwoP1wASncgZN4ZutzXX"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/libraries/Errors.sol": {
+			"keccak256": "0xc23cee4e140cc1e3bcc595daf9d492ceb71fc25d4f63a311341f26fcb10fd63d",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://a26b17019bfa0bbb684b64f2bb98eb67639cbb172692c0b9280fbd516b1cda51",
+				"dweb:/ipfs/QmWP2NvaXRH8QoRaqqxsz1ahBqRmtAy5K5Nb83RSoDsz8B"
+			]
+		}
+	},
+	"version": 1
+}

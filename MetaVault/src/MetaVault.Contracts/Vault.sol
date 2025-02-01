@@ -10,19 +10,17 @@
 //
 pragma solidity 0.8.22;
 
-import {Math} from "@openzeppelin/utils/math/Math.sol";
-import {Address} from "@openzeppelin/utils/Address.sol";
-import {IERC20} from "@openzeppelin/token/ERC20/IERC20.sol";
-import {SafeERC20} from "@openzeppelin/token/ERC20/utils/SafeERC20.sol";
-import {IERC20Metadata} from "@openzeppelin/interfaces/IERC20Metadata.sol";
-import {IAccessControl} from "@openzeppelin/access/IAccessControl.sol";
-import {
-    ERC20Upgradeable,
-    ERC4626Upgradeable
-} from "@openzeppelin-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol";
+import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import {IAccessControl} from "@openzeppelin/contracts/access/IAccessControl.sol";
+import {ERC4626Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol";
+import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import {AccessControlDefaultAdminRulesUpgradeable} from
-    "@openzeppelin-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol";
-import {ReentrancyGuardUpgradeable} from "@openzeppelin-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
+    "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol";
+import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 
 import {
     AmountZero,
@@ -866,7 +864,7 @@ contract Vault is ERC4626Upgradeable, AccessControlDefaultAdminRulesUpgradeable,
     /*                                 ERC20 LOGIC                                */
     /* -------------------------------------------------------------------------- */
 
-    /// @inheritdoc ERC20Upgradeable
+    /// @inheritdoc IERC20
     function transfer(address to, uint256 value)
         public
         override(ERC20Upgradeable, IERC20)
@@ -894,7 +892,7 @@ contract Vault is ERC4626Upgradeable, AccessControlDefaultAdminRulesUpgradeable,
         return super.transferFrom(from, to, value);
     }
 
-    /// @inheritdoc ERC20Upgradeable
+    /// @inheritdoc IERC20
     function approve(address spender, uint256 value)
         public
         override(ERC20Upgradeable, IERC20)

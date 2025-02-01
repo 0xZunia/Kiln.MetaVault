@@ -1,0 +1,266 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IERC20",
+						"name": "rewardsAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "payload",
+						"type": "bytes"
+					}
+				],
+				"name": "claim",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "asset",
+						"type": "address"
+					}
+				],
+				"name": "maxDeposit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "asset",
+						"type": "address"
+					}
+				],
+				"name": "maxWithdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IERC20",
+						"name": "rewardsAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "payload",
+						"type": "bytes"
+					}
+				],
+				"name": "reinvest",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "asset",
+						"type": "address"
+					}
+				],
+				"name": "totalAssets",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "maximebrugel @ Kiln.",
+			"kind": "dev",
+			"methods": {
+				"claim(address,address,bytes)": {
+					"params": {
+						"asset": "The vault underlying asset.",
+						"rewardsAsset": "The rewards asset to claim."
+					}
+				},
+				"deposit(address,uint256)": {
+					"details": "Always called using `.delegatecall` (use `address(this)` and not `msg.sender`).",
+					"params": {
+						"amount": "The amount to deposit.",
+						"asset": "The asset to deposit."
+					}
+				},
+				"maxDeposit(address)": {
+					"params": {
+						"asset": "The asset to get the maximum deposit amount of."
+					}
+				},
+				"maxWithdraw(address)": {
+					"params": {
+						"asset": "The asset to get the maximum withdraw amount of."
+					}
+				},
+				"reinvest(address,address,bytes)": {
+					"params": {
+						"asset": "The vault underlying asset.",
+						"rewardsAsset": "The rewards asset to claim."
+					}
+				},
+				"totalAssets(address)": {
+					"details": "Always called using `.call` (use `msg.sender` and not `address(this)`).",
+					"params": {
+						"asset": "The asset to get the balance of."
+					}
+				},
+				"withdraw(address,uint256)": {
+					"details": "Always called using `.delegatecall` (use `address(this)` and not `msg.sender`).",
+					"params": {
+						"amount": "The amount to withdraw.",
+						"asset": "The asset to withdraw."
+					}
+				}
+			},
+			"title": "Interface for connectors.",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"claim(address,address,bytes)": {
+					"notice": "Claim additional rewards from the underlying protocol and transfer them."
+				},
+				"deposit(address,uint256)": {
+					"notice": "Deposit the asset in the underlying protocol."
+				},
+				"maxDeposit(address)": {
+					"notice": "Get the maximum amount that can be deposited."
+				},
+				"maxWithdraw(address)": {
+					"notice": "Get the maximum amount that can be withdrawn (by the vault, not a specific user)."
+				},
+				"reinvest(address,address,bytes)": {
+					"notice": "Claim additional rewards from the underlying protocol and send them back to the vault."
+				},
+				"totalAssets(address)": {
+					"notice": "Get the total balance (deposit + rewards)."
+				},
+				"withdraw(address,uint256)": {
+					"notice": "Withdraw the asset from the underlying protocol."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"MetaVault/src/MetaVault.Contracts/interfaces/IConnector.sol": "IConnector"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xe06a3f08a987af6ad2e1c1e774405d4fe08f1694b67517438b467cecf0da0ef7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://df6f0c459663c9858b6cba2cda1d14a7d05a985bed6d2de72bd8e78c25ee79db",
+				"dweb:/ipfs/QmeTTxZ7qVk9rjEv2R4CpCwdf8UMCcRqDNMvzNxHc3Fnn9"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/interfaces/IConnector.sol": {
+			"keccak256": "0x7a70f6ba7fb099456e8fb962e0b920c5e152f745a84ce6c614822008faea0009",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://63e5bd300634756e4eb2f9bf0d456eda67e7bdc0b0da512ac2a1afd72c37e1b5",
+				"dweb:/ipfs/QmNWTPLvtMJFP76hoHfsgxTuR6PBNpp8WDbGe4wnYj8tcU"
+			]
+		}
+	},
+	"version": 1
+}

@@ -1,0 +1,272 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"dispatchFees(address,uint8)": "4c50c74c",
+			"feeRecipient(address)": "d78162e9",
+			"feeRecipientAt(uint256)": "a7b09122",
+			"feeRecipients()": "0adfdcb9",
+			"incrementPendingDepositFee(uint256)": "57a57524",
+			"incrementPendingRewardFee(uint256)": "fc5ad4d1",
+			"pendingDepositFee()": "2c15e0f7",
+			"pendingRewardFee()": "7c10c835",
+			"setFeeRecipients((address,uint256,uint256)[],uint8)": "4bd43cdd"
+		}
+	},
+	"abi": [
+		{
+			"inputs": [
+				{
+					"internalType": "contract IERC20",
+					"name": "asset",
+					"type": "address"
+				},
+				{
+					"internalType": "uint8",
+					"name": "underlyingDecimals",
+					"type": "uint8"
+				}
+			],
+			"name": "dispatchFees",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "recipient",
+					"type": "address"
+				}
+			],
+			"name": "feeRecipient",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "recipient",
+							"type": "address"
+						},
+						{
+							"internalType": "uint256",
+							"name": "depositFeeSplit",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "rewardFeeSplit",
+							"type": "uint256"
+						}
+					],
+					"internalType": "struct IFeeDispatcher.FeeRecipient",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "index",
+					"type": "uint256"
+				}
+			],
+			"name": "feeRecipientAt",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "recipient",
+							"type": "address"
+						},
+						{
+							"internalType": "uint256",
+							"name": "depositFeeSplit",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "rewardFeeSplit",
+							"type": "uint256"
+						}
+					],
+					"internalType": "struct IFeeDispatcher.FeeRecipient",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "feeRecipients",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "recipient",
+							"type": "address"
+						},
+						{
+							"internalType": "uint256",
+							"name": "depositFeeSplit",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "rewardFeeSplit",
+							"type": "uint256"
+						}
+					],
+					"internalType": "struct IFeeDispatcher.FeeRecipient[]",
+					"name": "",
+					"type": "tuple[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "incrementPendingDepositFee",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "incrementPendingRewardFee",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "pendingDepositFee",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "pendingRewardFee",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "recipient",
+							"type": "address"
+						},
+						{
+							"internalType": "uint256",
+							"name": "depositFeeSplit",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "rewardFeeSplit",
+							"type": "uint256"
+						}
+					],
+					"internalType": "struct IFeeDispatcher.FeeRecipient[]",
+					"name": "recipients",
+					"type": "tuple[]"
+				},
+				{
+					"internalType": "uint8",
+					"name": "underlyingDecimal",
+					"type": "uint8"
+				}
+			],
+			"name": "setFeeRecipients",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		}
+	]
+}

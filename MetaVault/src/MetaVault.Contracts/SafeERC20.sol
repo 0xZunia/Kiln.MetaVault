@@ -3,9 +3,9 @@
 
 pragma solidity ^0.8.20;
 
-import {IERC20} from "../IERC20.sol";
-import {IERC20Permit} from "../extensions/IERC20Permit.sol";
-import {Address} from "../../../utils/Address.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
 
 /**
  * @title SafeERC20

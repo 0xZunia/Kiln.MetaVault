@@ -1,0 +1,3458 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "externalAccessControl_",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "vaultFactory_",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "AccessControlBadConfirmation",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint48",
+						"name": "schedule",
+						"type": "uint48"
+					}
+				],
+				"name": "AccessControlEnforcedDefaultAdminDelay",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "AccessControlEnforcedDefaultAdminRules",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "defaultAdmin",
+						"type": "address"
+					}
+				],
+				"name": "AccessControlInvalidDefaultAdmin",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "neededRole",
+						"type": "bytes32"
+					}
+				],
+				"name": "AccessControlUnauthorizedAccount",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "AddressBlocked",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "target",
+						"type": "address"
+					}
+				],
+				"name": "AddressEmptyCode",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "AddressNotContract",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "AddressNotInternallySanctionedOnly",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "AmountZero",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "DepositPaused",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "allowance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "needed",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC20InsufficientAllowance",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "needed",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC20InsufficientBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "approver",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidApprover",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidReceiver",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidSender",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidSpender",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "max",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC4626ExceededMaxDeposit",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "max",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC4626ExceededMaxMint",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "max",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC4626ExceededMaxRedeem",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "max",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC4626ExceededMaxWithdraw",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "FailedCall",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "InsufficientLiquidity",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "InvalidConnectorName",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "InvalidInitialization",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "MinimumTotalSupplyNotReached",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NoAdditionalRewardsClaimed",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NoAdditionalRewardsStrategy",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "NotConfiguredFactory",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NotInitializing",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NotTransferable",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NothingToCollect",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "offset",
+						"type": "uint8"
+					}
+				],
+				"name": "OffsetTooHigh",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "PreviewZero",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "ReentrancyGuardReentrantCall",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					}
+				],
+				"name": "RemainderNotZero",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "bits",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "SafeCastOverflowedUintDowncast",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					}
+				],
+				"name": "SafeERC20FailedOperation",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "totalAssets",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "newTotalAssets",
+						"type": "uint256"
+					}
+				],
+				"name": "TotalAssetsDecreased",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "depositFee",
+						"type": "uint256"
+					}
+				],
+				"name": "WrongDepositFee",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "rewardFee",
+						"type": "uint256"
+					}
+				],
+				"name": "WrongRewardFee",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "enum Vault.AdditionalRewardsStrategy",
+						"name": "newAdditionalRewardsStrategy",
+						"type": "uint8"
+					}
+				],
+				"name": "AdditionalRewardsStrategyUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "contract IERC20",
+						"name": "asset",
+						"type": "address"
+					}
+				],
+				"name": "AssetInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "contract BlockList",
+						"name": "newBlockList",
+						"type": "address"
+					}
+				],
+				"name": "BlockListUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "newConnectorName",
+						"type": "bytes32"
+					}
+				],
+				"name": "ConnectorNameUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "contract IConnectorRegistry",
+						"name": "newConnectorRegistry",
+						"type": "address"
+					}
+				],
+				"name": "ConnectorRegistryUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [],
+				"name": "DefaultAdminDelayChangeCanceled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint48",
+						"name": "newDelay",
+						"type": "uint48"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint48",
+						"name": "effectSchedule",
+						"type": "uint48"
+					}
+				],
+				"name": "DefaultAdminDelayChangeScheduled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [],
+				"name": "DefaultAdminTransferCanceled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint48",
+						"name": "acceptSchedule",
+						"type": "uint48"
+					}
+				],
+				"name": "DefaultAdminTransferScheduled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					}
+				],
+				"name": "Deposit",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newDepositFee",
+						"type": "uint256"
+					}
+				],
+				"name": "DepositFeeUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "feeDispatcher",
+						"type": "address"
+					}
+				],
+				"name": "FeeDispatcherInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "version",
+						"type": "uint64"
+					}
+				],
+				"name": "Initialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newMinTotalSupply",
+						"type": "uint256"
+					}
+				],
+				"name": "MinTotalSupplyInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "NameInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "offset",
+						"type": "uint8"
+					}
+				],
+				"name": "OffsetInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newRewardFee",
+						"type": "uint256"
+					}
+				],
+				"name": "RewardFeeUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "rewardsAsset",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "RewardsClaimed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "previousAdminRole",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "newAdminRole",
+						"type": "bytes32"
+					}
+				],
+				"name": "RoleAdminChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleGranted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleRevoked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
+					}
+				],
+				"name": "SymbolInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "newTransferableFlag",
+						"type": "bool"
+					}
+				],
+				"name": "TransferableUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					}
+				],
+				"name": "Withdraw",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "CLAIM_MANAGER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "DEFAULT_ADMIN_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "FEE_COLLECTOR_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "FEE_MANAGER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PAUSER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "SANCTIONS_MANAGER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "SPENDER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "UNPAUSER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "acceptDefaultAdminTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "additionalRewardsStrategy",
+				"outputs": [
+					{
+						"internalType": "enum Vault.AdditionalRewardsStrategy",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "asset",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "beginDefaultAdminTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "blockList",
+				"outputs": [
+					{
+						"internalType": "contract BlockList",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "cancelDefaultAdminTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint48",
+						"name": "newDelay",
+						"type": "uint48"
+					}
+				],
+				"name": "changeDefaultAdminDelay",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "rewardsAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "payload",
+						"type": "bytes"
+					}
+				],
+				"name": "claimAdditionalRewards",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "collectRewardFees",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "collectableRewardFees",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "connectorName",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "connectorRegistry",
+				"outputs": [
+					{
+						"internalType": "contract IConnectorRegistry",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					}
+				],
+				"name": "convertToAssets",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					}
+				],
+				"name": "convertToShares",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "defaultAdmin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "defaultAdminDelay",
+				"outputs": [
+					{
+						"internalType": "uint48",
+						"name": "",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "defaultAdminDelayIncreaseWait",
+				"outputs": [
+					{
+						"internalType": "uint48",
+						"name": "",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "delegateToFactory",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					}
+				],
+				"name": "deposit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "depositFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "dispatchFees",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					}
+				],
+				"name": "feeRecipient",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "recipient",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "depositFeeSplit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "rewardFeeSplit",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IFeeDispatcher.FeeRecipient",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "feeRecipientAt",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "recipient",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "depositFeeSplit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "rewardFeeSplit",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IFeeDispatcher.FeeRecipient",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "feeRecipients",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "recipient",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "depositFeeSplit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "rewardFeeSplit",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IFeeDispatcher.FeeRecipient[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "blockedUser",
+						"type": "address"
+					}
+				],
+				"name": "forceWithdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleAdmin",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "grantRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "hasRole",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "contract IERC20",
+								"name": "asset_",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "name_",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "symbol_",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "transferable_",
+								"type": "bool"
+							},
+							{
+								"internalType": "contract IConnectorRegistry",
+								"name": "connectorRegistry_",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "connectorName_",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "depositFee_",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "rewardFee_",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "initialDefaultAdmin_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialFeeManager_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialSanctionsManager_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialClaimManager_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialPauser_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialUnpauser_",
+								"type": "address"
+							},
+							{
+								"internalType": "uint48",
+								"name": "initialDelay_",
+								"type": "uint48"
+							},
+							{
+								"internalType": "uint8",
+								"name": "offset_",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "minTotalSupply_",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Vault.InitializationParams",
+						"name": "initializationParams",
+						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"components": [
+									{
+										"internalType": "address",
+										"name": "recipient",
+										"type": "address"
+									},
+									{
+										"internalType": "uint256",
+										"name": "depositFeeSplit",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "rewardFeeSplit",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct IFeeDispatcher.FeeRecipient[]",
+								"name": "recipients_",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "address",
+								"name": "feeDispatcher_",
+								"type": "address"
+							},
+							{
+								"internalType": "enum Vault.AdditionalRewardsStrategy",
+								"name": "additionalRewardsStrategy_",
+								"type": "uint8"
+							},
+							{
+								"internalType": "contract BlockList",
+								"name": "blockList_",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "pendingDepositFee_",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "pendingRewardFee_",
+								"type": "uint256"
+							},
+							{
+								"internalType": "contract IConnectorRegistry",
+								"name": "connectorRegistry_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialFeeCollector_",
+								"type": "address"
+							}
+						],
+						"internalType": "struct Vault.UpgradeParams",
+						"name": "upgradeParams",
+						"type": "tuple"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "maxDeposit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "maxMint",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "maxRedeem",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "maxWithdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					}
+				],
+				"name": "mint",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pauseDeposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pendingDefaultAdmin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					},
+					{
+						"internalType": "uint48",
+						"name": "schedule",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pendingDefaultAdminDelay",
+				"outputs": [
+					{
+						"internalType": "uint48",
+						"name": "newDelay",
+						"type": "uint48"
+					},
+					{
+						"internalType": "uint48",
+						"name": "schedule",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pendingDepositFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pendingRewardFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					}
+				],
+				"name": "previewDeposit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					}
+				],
+				"name": "previewMint",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					}
+				],
+				"name": "previewRedeem",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					}
+				],
+				"name": "previewWithdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "shares",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "redeem",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "renounceRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "revokeRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rewardFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rollbackDefaultAdminDelay",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "enum Vault.AdditionalRewardsStrategy",
+						"name": "strategy",
+						"type": "uint8"
+					}
+				],
+				"name": "setAdditionalRewardsStrategy",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract BlockList",
+						"name": "newBlockList",
+						"type": "address"
+					}
+				],
+				"name": "setBlockList",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "newDepositFee",
+						"type": "uint256"
+					}
+				],
+				"name": "setDepositFee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "recipient",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "depositFeeSplit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "rewardFeeSplit",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IFeeDispatcher.FeeRecipient[]",
+						"name": "recipients",
+						"type": "tuple[]"
+					}
+				],
+				"name": "setFeeRecipients",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "newRewardFee",
+						"type": "uint256"
+					}
+				],
+				"name": "setRewardFee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalAssets",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "transferable",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "unpauseDeposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"components": [
+									{
+										"internalType": "address",
+										"name": "recipient",
+										"type": "address"
+									},
+									{
+										"internalType": "uint256",
+										"name": "depositFeeSplit",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "rewardFeeSplit",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct IFeeDispatcher.FeeRecipient[]",
+								"name": "recipients_",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "address",
+								"name": "feeDispatcher_",
+								"type": "address"
+							},
+							{
+								"internalType": "enum Vault.AdditionalRewardsStrategy",
+								"name": "additionalRewardsStrategy_",
+								"type": "uint8"
+							},
+							{
+								"internalType": "contract BlockList",
+								"name": "blockList_",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "pendingDepositFee_",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "pendingRewardFee_",
+								"type": "uint256"
+							},
+							{
+								"internalType": "contract IConnectorRegistry",
+								"name": "connectorRegistry_",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "initialFeeCollector_",
+								"type": "address"
+							}
+						],
+						"internalType": "struct Vault.UpgradeParams",
+						"name": "upgradeParams",
+						"type": "tuple"
+					}
+				],
+				"name": "upgrade",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "vaultFactory",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "maximebrugel @ Kiln.",
+			"details": "Using ERC-7201 standard.",
+			"errors": {
+				"AccessControlBadConfirmation()": [
+					{
+						"details": "The caller of a function is not the expected one. NOTE: Don't confuse with {AccessControlUnauthorizedAccount}."
+					}
+				],
+				"AccessControlEnforcedDefaultAdminDelay(uint48)": [
+					{
+						"details": "The delay for transferring the default admin delay is enforced and the operation must wait until `schedule`. NOTE: `schedule` can be 0 indicating there's no transfer scheduled."
+					}
+				],
+				"AccessControlEnforcedDefaultAdminRules()": [
+					{
+						"details": "At least one of the following rules was violated: - The `DEFAULT_ADMIN_ROLE` must only be managed by itself. - The `DEFAULT_ADMIN_ROLE` must only be held by one account at the time. - Any `DEFAULT_ADMIN_ROLE` transfer must be in two delayed steps."
+					}
+				],
+				"AccessControlInvalidDefaultAdmin(address)": [
+					{
+						"details": "The new default admin is not a valid default admin."
+					}
+				],
+				"AccessControlUnauthorizedAccount(address,bytes32)": [
+					{
+						"details": "The `account` is missing a role."
+					}
+				],
+				"AddressBlocked(address)": [
+					{
+						"details": "Error emitted when the given address is on the blocklist."
+					}
+				],
+				"AddressEmptyCode(address)": [
+					{
+						"details": "There's no code at `target` (it is not a contract)."
+					}
+				],
+				"AddressNotContract(address)": [
+					{
+						"details": "Error emitted when the address is not a contract.",
+						"params": {
+							"addr": "The address that was attempted to be used as a contract."
+						}
+					}
+				],
+				"AddressNotInternallySanctionedOnly(address)": [
+					{
+						"details": "Error emitted when the given address is not only in the internal sanction list.",
+						"params": {
+							"addr": "The address was checked."
+						}
+					}
+				],
+				"AmountZero()": [
+					{
+						"details": "Error emitted when a given amount is zero."
+					}
+				],
+				"DepositPaused()": [
+					{
+						"details": "Error emitted when the deposit is paused."
+					}
+				],
+				"ERC20InsufficientAllowance(address,uint256,uint256)": [
+					{
+						"details": "Indicates a failure with the `spender`’s `allowance`. Used in transfers.",
+						"params": {
+							"allowance": "Amount of tokens a `spender` is allowed to operate with.",
+							"needed": "Minimum amount required to perform a transfer.",
+							"spender": "Address that may be allowed to operate on tokens without being their owner."
+						}
+					}
+				],
+				"ERC20InsufficientBalance(address,uint256,uint256)": [
+					{
+						"details": "Indicates an error related to the current `balance` of a `sender`. Used in transfers.",
+						"params": {
+							"balance": "Current balance for the interacting account.",
+							"needed": "Minimum amount required to perform a transfer.",
+							"sender": "Address whose tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidApprover(address)": [
+					{
+						"details": "Indicates a failure with the `approver` of a token to be approved. Used in approvals.",
+						"params": {
+							"approver": "Address initiating an approval operation."
+						}
+					}
+				],
+				"ERC20InvalidReceiver(address)": [
+					{
+						"details": "Indicates a failure with the token `receiver`. Used in transfers.",
+						"params": {
+							"receiver": "Address to which tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidSender(address)": [
+					{
+						"details": "Indicates a failure with the token `sender`. Used in transfers.",
+						"params": {
+							"sender": "Address whose tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidSpender(address)": [
+					{
+						"details": "Indicates a failure with the `spender` to be approved. Used in approvals.",
+						"params": {
+							"spender": "Address that may be allowed to operate on tokens without being their owner."
+						}
+					}
+				],
+				"ERC4626ExceededMaxDeposit(address,uint256,uint256)": [
+					{
+						"details": "Attempted to deposit more assets than the max amount for `receiver`."
+					}
+				],
+				"ERC4626ExceededMaxMint(address,uint256,uint256)": [
+					{
+						"details": "Attempted to mint more shares than the max amount for `receiver`."
+					}
+				],
+				"ERC4626ExceededMaxRedeem(address,uint256,uint256)": [
+					{
+						"details": "Attempted to redeem more shares than the max amount for `receiver`."
+					}
+				],
+				"ERC4626ExceededMaxWithdraw(address,uint256,uint256)": [
+					{
+						"details": "Attempted to withdraw more assets than the max amount for `receiver`."
+					}
+				],
+				"FailedCall()": [
+					{
+						"details": "A call to an address target failed. The target may have reverted."
+					}
+				],
+				"InsufficientLiquidity()": [
+					{
+						"details": "Error emitted when trying to forceWithdraw a user, but there is not enough liquidity."
+					}
+				],
+				"InvalidConnectorName(bytes32)": [
+					{
+						"details": "Error emitted when the connector name is invalid (not existing on the registry)."
+					}
+				],
+				"InvalidInitialization()": [
+					{
+						"details": "The contract is already initialized."
+					}
+				],
+				"MinimumTotalSupplyNotReached()": [
+					{
+						"details": "Error emitted when the minimum totalSupply is not met after a deposit."
+					}
+				],
+				"NoAdditionalRewardsClaimed()": [
+					{
+						"details": "Error emitted when no additional rewards claimed (using the claim function)."
+					}
+				],
+				"NoAdditionalRewardsStrategy()": [
+					{
+						"details": "Error emitted when no additional rewards strategy is set."
+					}
+				],
+				"NotConfiguredFactory(address)": [
+					{
+						"details": "Error emitted when a confirured factory reserved interaction is attempted by another.",
+						"params": {
+							"addr": "The address attempting to interact."
+						}
+					}
+				],
+				"NotInitializing()": [
+					{
+						"details": "The contract is not initializing."
+					}
+				],
+				"NotTransferable()": [
+					{
+						"details": "Error emitted when the ERC4626 is not transferable."
+					}
+				],
+				"NothingToCollect()": [
+					{
+						"details": "Error emitted when no rewards could be collected."
+					}
+				],
+				"OffsetTooHigh(uint8)": [
+					{
+						"details": "Error emitted when the offset set is too high."
+					}
+				],
+				"PreviewZero()": [
+					{
+						"details": "Error emitted when the preview result is zero (shares or assets)."
+					}
+				],
+				"ReentrancyGuardReentrantCall()": [
+					{
+						"details": "Unauthorized reentrant call."
+					}
+				],
+				"RemainderNotZero(uint256)": [
+					{
+						"details": "Error emitted when the remainder of transferred shares is not zero."
+					}
+				],
+				"SafeCastOverflowedUintDowncast(uint8,uint256)": [
+					{
+						"details": "Value doesn't fit in an uint of `bits` size."
+					}
+				],
+				"SafeERC20FailedOperation(address)": [
+					{
+						"details": "An operation with an ERC-20 token failed."
+					}
+				],
+				"TotalAssetsDecreased(uint256,uint256)": [
+					{
+						"details": "Error emitted when the total assets decreased."
+					}
+				],
+				"WrongDepositFee(uint256)": [
+					{
+						"details": "Error emitted when the deposit fee over 100%."
+					}
+				],
+				"WrongRewardFee(uint256)": [
+					{
+						"details": "Error emitted when the reward fee over 100%."
+					}
+				]
+			},
+			"events": {
+				"AdditionalRewardsStrategyUpdated(uint8)": {
+					"details": "Emitted when the additional rewards strategy is updated.",
+					"params": {
+						"newAdditionalRewardsStrategy": "The new additional rewards strategy."
+					}
+				},
+				"Approval(address,address,uint256)": {
+					"details": "Emitted when the allowance of a `spender` for an `owner` is set by a call to {approve}. `value` is the new allowance."
+				},
+				"AssetInitialized(address)": {
+					"details": "Emitted when an asset is initialized.",
+					"params": {
+						"asset": "The (ERC20) asset that is initialized."
+					}
+				},
+				"BlockListUpdated(address)": {
+					"details": "Emitted when the blocklist is updated.",
+					"params": {
+						"newBlockList": "The new blocklist."
+					}
+				},
+				"ConnectorNameUpdated(bytes32)": {
+					"details": "Emitted when the connector name is updated.",
+					"params": {
+						"newConnectorName": "The new connector name."
+					}
+				},
+				"ConnectorRegistryUpdated(address)": {
+					"details": "Emitted when the connector registry is updated.",
+					"params": {
+						"newConnectorRegistry": "The new connector registry."
+					}
+				},
+				"DefaultAdminDelayChangeCanceled()": {
+					"details": "Emitted when a {pendingDefaultAdminDelay} is reset if its schedule didn't pass."
+				},
+				"DefaultAdminDelayChangeScheduled(uint48,uint48)": {
+					"details": "Emitted when a {defaultAdminDelay} change is started, setting `newDelay` as the next delay to be applied between default admin transfer after `effectSchedule` has passed."
+				},
+				"DefaultAdminTransferCanceled()": {
+					"details": "Emitted when a {pendingDefaultAdmin} is reset if it was never accepted, regardless of its schedule."
+				},
+				"DefaultAdminTransferScheduled(address,uint48)": {
+					"details": "Emitted when a {defaultAdmin} transfer is started, setting `newAdmin` as the next address to become the {defaultAdmin} by calling {acceptDefaultAdminTransfer} only after `acceptSchedule` passes."
+				},
+				"DepositFeeUpdated(uint256)": {
+					"details": "Emitted when the deposit fee is updated.",
+					"params": {
+						"newDepositFee": "The new deposit fee."
+					}
+				},
+				"FeeDispatcherInitialized(address)": {
+					"details": "Emitted when the fee dispatcher is initialized.",
+					"params": {
+						"feeDispatcher": "The fee dispatcher."
+					}
+				},
+				"Initialized(uint64)": {
+					"details": "Triggered when the contract has been initialized or reinitialized."
+				},
+				"MinTotalSupplyInitialized(uint256)": {
+					"details": "Emitted when minimum supply state is updated.",
+					"params": {
+						"newMinTotalSupply": "The new minimum supply state."
+					}
+				},
+				"NameInitialized(string)": {
+					"details": "Emitted when the ERC4626 name is initialized.",
+					"params": {
+						"name": "The name of the ERC4626."
+					}
+				},
+				"OffsetInitialized(uint8)": {
+					"details": "Emitted when the offset is initialized.",
+					"params": {
+						"offset": "The offset."
+					}
+				},
+				"RewardFeeUpdated(uint256)": {
+					"details": "Emitted when the reward fee is updated.",
+					"params": {
+						"newRewardFee": "The new reward fee."
+					}
+				},
+				"RewardsClaimed(address,uint256)": {
+					"details": "Emitted when additional rewards are claimed to the underlying protocol.",
+					"params": {
+						"amount": "The amount distributed to the vault.",
+						"rewardsAsset": "The rewards asset claimed."
+					}
+				},
+				"RoleAdminChanged(bytes32,bytes32,bytes32)": {
+					"details": "Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole` `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite {RoleAdminChanged} not being emitted signaling this."
+				},
+				"RoleGranted(bytes32,address,address)": {
+					"details": "Emitted when `account` is granted `role`. `sender` is the account that originated the contract call. This account bears the admin role (for the granted role). Expected in cases where the role was granted using the internal {AccessControl-_grantRole}."
+				},
+				"RoleRevoked(bytes32,address,address)": {
+					"details": "Emitted when `account` is revoked `role`. `sender` is the account that originated the contract call:   - if using `revokeRole`, it is the admin role bearer   - if using `renounceRole`, it is the role bearer (i.e. `account`)"
+				},
+				"SymbolInitialized(string)": {
+					"details": "Emitted when the ERC4626 symbol is initialized.",
+					"params": {
+						"symbol": "The symbol of the ERC4626."
+					}
+				},
+				"Transfer(address,address,uint256)": {
+					"details": "Emitted when `value` tokens are moved from one account (`from`) to another (`to`). Note that `value` may be zero."
+				},
+				"TransferableUpdated(bool)": {
+					"details": "Emitted when the transferable flag is updated.",
+					"params": {
+						"newTransferableFlag": "The new transferable flag."
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"acceptDefaultAdminTransfer()": {
+					"details": "Completes a {defaultAdmin} transfer previously started with {beginDefaultAdminTransfer}. After calling the function: - `DEFAULT_ADMIN_ROLE` should be granted to the caller. - `DEFAULT_ADMIN_ROLE` should be revoked from the previous holder. - {pendingDefaultAdmin} should be reset to zero values. Requirements: - Only can be called by the {pendingDefaultAdmin}'s `newAdmin`. - The {pendingDefaultAdmin}'s `acceptSchedule` should've passed."
+				},
+				"additionalRewardsStrategy()": {
+					"returns": {
+						"_0": "additionalRewardsStrategy The additional rewards strategy."
+					}
+				},
+				"allowance(address,address)": {
+					"details": "See {IERC20-allowance}."
+				},
+				"approve(address,uint256)": {
+					"details": "Sets a `value` amount of tokens as the allowance of `spender` over the caller's tokens. Returns a boolean value indicating whether the operation succeeded. IMPORTANT: Beware that changing an allowance with this method brings the risk that someone may use both the old and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards: https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729 Emits an {Approval} event."
+				},
+				"asset()": {
+					"details": "See {IERC4626-asset}. "
+				},
+				"balanceOf(address)": {
+					"details": "See {IERC20-balanceOf}."
+				},
+				"beginDefaultAdminTransfer(address)": {
+					"details": "Starts a {defaultAdmin} transfer by setting a {pendingDefaultAdmin} scheduled for acceptance after the current timestamp plus a {defaultAdminDelay}. Requirements: - Only can be called by the current {defaultAdmin}. Emits a DefaultAdminRoleChangeStarted event."
+				},
+				"blockList()": {
+					"returns": {
+						"_0": "The blocklist."
+					}
+				},
+				"cancelDefaultAdminTransfer()": {
+					"details": "Cancels a {defaultAdmin} transfer previously started with {beginDefaultAdminTransfer}. A {pendingDefaultAdmin} not yet accepted can also be cancelled with this function. Requirements: - Only can be called by the current {defaultAdmin}. May emit a DefaultAdminTransferCanceled event."
+				},
+				"changeDefaultAdminDelay(uint48)": {
+					"details": "Initiates a {defaultAdminDelay} update by setting a {pendingDefaultAdminDelay} scheduled for getting into effect after the current timestamp plus a {defaultAdminDelay}. This function guarantees that any call to {beginDefaultAdminTransfer} done between the timestamp this method is called and the {pendingDefaultAdminDelay} effect schedule will use the current {defaultAdminDelay} set before calling. The {pendingDefaultAdminDelay}'s effect schedule is defined in a way that waiting until the schedule and then calling {beginDefaultAdminTransfer} with the new delay will take at least the same as another {defaultAdmin} complete transfer (including acceptance). The schedule is designed for two scenarios: - When the delay is changed for a larger one the schedule is `block.timestamp + newDelay` capped by {defaultAdminDelayIncreaseWait}. - When the delay is changed for a shorter one, the schedule is `block.timestamp + (current delay - new delay)`. A {pendingDefaultAdminDelay} that never got into effect will be canceled in favor of a new scheduled change. Requirements: - Only can be called by the current {defaultAdmin}. Emits a DefaultAdminDelayChangeScheduled event and may emit a DefaultAdminDelayChangeCanceled event."
+				},
+				"claimAdditionalRewards(address,bytes)": {
+					"details": "Additional rewards are considered as yield, where the reward fee can be applied.",
+					"params": {
+						"payload": "The payload to pass to the connector.",
+						"rewardsAsset": "The rewards asset to claim."
+					}
+				},
+				"collectableRewardFees()": {
+					"returns": {
+						"_0": "collectableRewardFees The amount of reward fees that can be collected by the FeeManager."
+					}
+				},
+				"connectorName()": {
+					"returns": {
+						"_0": "connectorName The connector name."
+					}
+				},
+				"connectorRegistry()": {
+					"returns": {
+						"_0": "connectorRegistry The connector registry."
+					}
+				},
+				"constructor": {
+					"params": {
+						"externalAccessControl_": "The external access control proxy contract."
+					}
+				},
+				"convertToAssets(uint256)": {
+					"details": "See {IERC4626-convertToAssets}. "
+				},
+				"convertToShares(uint256)": {
+					"details": "See {IERC4626-convertToShares}. "
+				},
+				"decimals()": {
+					"details": "Decimals are computed by adding the decimal offset on top of the underlying asset's decimals. This \"original\" value is cached during construction of the vault contract. If this read operation fails (e.g., the asset has not been created yet), a default of 18 is used to represent the underlying asset's decimals. See {IERC20Metadata-decimals}."
+				},
+				"defaultAdmin()": {
+					"details": "Returns the address of the current `DEFAULT_ADMIN_ROLE` holder."
+				},
+				"defaultAdminDelay()": {
+					"details": "Returns the delay required to schedule the acceptance of a {defaultAdmin} transfer started. This delay will be added to the current timestamp when calling {beginDefaultAdminTransfer} to set the acceptance schedule. NOTE: If a delay change has been scheduled, it will take effect as soon as the schedule passes, making this function returns the new delay. See {changeDefaultAdminDelay}."
+				},
+				"defaultAdminDelayIncreaseWait()": {
+					"details": "Maximum time in seconds for an increase to {defaultAdminDelay} (that is scheduled using {changeDefaultAdminDelay}) to take effect. Default to 5 days. When the {defaultAdminDelay} is scheduled to be increased, it goes into effect after the new delay has passed with the purpose of giving enough time for reverting any accidental change (i.e. using milliseconds instead of seconds) that may lock the contract. However, to avoid excessive schedules, the wait is capped by this function and it can be overrode for a custom {defaultAdminDelay} increase scheduling. IMPORTANT: Make sure to add a reasonable amount of time while overriding this value, otherwise, there's a risk of setting a high new delay that goes into effect almost immediately without the possibility of human intervention in the case of an input error (eg. set milliseconds instead of seconds)."
+				},
+				"delegateToFactory(bytes)": {
+					"details": "Only the factory can call this function, and will handle the callback.",
+					"params": {
+						"data": "The data to delegatecall."
+					}
+				},
+				"deposit(uint256,address)": {
+					"details": "See {IERC4626-deposit}. "
+				},
+				"depositFee()": {
+					"returns": {
+						"_0": "depositFee The deposit fee."
+					}
+				},
+				"feeRecipient(address)": {
+					"params": {
+						"recipient": "The address of the fee recipient."
+					},
+					"returns": {
+						"_0": "The fee recipient details."
+					}
+				},
+				"feeRecipientAt(uint256)": {
+					"params": {
+						"index": "The index of the fee recipient."
+					},
+					"returns": {
+						"_0": "The fee recipient details."
+					}
+				},
+				"feeRecipients()": {
+					"returns": {
+						"_0": "An array of fee recipients."
+					}
+				},
+				"forceWithdraw(address)": {
+					"details": "The user must be blocked by the internal blocklist and not sanctioned (OFAC).",
+					"params": {
+						"blockedUser": "The user to force withdraw."
+					}
+				},
+				"getRoleAdmin(bytes32)": {
+					"details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
+				},
+				"grantRole(bytes32,address)": {
+					"details": "See {AccessControl-grantRole}. Reverts for `DEFAULT_ADMIN_ROLE`."
+				},
+				"hasRole(bytes32,address)": {
+					"details": "Returns `true` if `account` has been granted `role`."
+				},
+				"initialize((address,string,string,bool,address,bytes32,uint256,uint256,address,address,address,address,address,address,uint48,uint8,uint256),((address,uint256,uint256)[],address,uint8,address,uint256,uint256,address,address))": {
+					"details": "The initialization is split into two steps:      1. Initialize the Vault (what's required for a new deployment).      2. Upgrade the Vault (what's required for an existing Vault upgrade).",
+					"params": {
+						"initializationParams": "The initialization parameters (first step)",
+						"upgradeParams": "The upgrade parameters (second step)."
+					}
+				},
+				"maxDeposit(address)": {
+					"details": "See {IERC4626-maxDeposit}. "
+				},
+				"maxMint(address)": {
+					"details": "See {IERC4626-maxMint}. "
+				},
+				"maxRedeem(address)": {
+					"details": "See {IERC4626-maxRedeem}. "
+				},
+				"maxWithdraw(address)": {
+					"details": "See {IERC4626-maxWithdraw}. "
+				},
+				"mint(uint256,address)": {
+					"details": "See {IERC4626-mint}. "
+				},
+				"name()": {
+					"details": "Returns the name of the token."
+				},
+				"owner()": {
+					"details": "See {IERC5313-owner}."
+				},
+				"pendingDefaultAdmin()": {
+					"details": "Returns a tuple of a `newAdmin` and an accept schedule. After the `schedule` passes, the `newAdmin` will be able to accept the {defaultAdmin} role by calling {acceptDefaultAdminTransfer}, completing the role transfer. A zero value only in `acceptSchedule` indicates no pending admin transfer. NOTE: A zero address `newAdmin` means that {defaultAdmin} is being renounced."
+				},
+				"pendingDefaultAdminDelay()": {
+					"details": "Returns a tuple of `newDelay` and an effect schedule. After the `schedule` passes, the `newDelay` will get into effect immediately for every new {defaultAdmin} transfer started with {beginDefaultAdminTransfer}. A zero value only in `effectSchedule` indicates no pending delay change. NOTE: A zero value only for `newDelay` means that the next {defaultAdminDelay} will be zero after the effect schedule."
+				},
+				"pendingDepositFee()": {
+					"returns": {
+						"_0": "The amount of pending deposit fee."
+					}
+				},
+				"pendingRewardFee()": {
+					"returns": {
+						"_0": "The amount of pending reward fee."
+					}
+				},
+				"previewDeposit(uint256)": {
+					"details": "See {IERC4626-previewDeposit}. "
+				},
+				"previewMint(uint256)": {
+					"details": "See {IERC4626-previewMint}. "
+				},
+				"previewRedeem(uint256)": {
+					"details": "See {IERC4626-previewRedeem}. "
+				},
+				"previewWithdraw(uint256)": {
+					"details": "See {IERC4626-previewWithdraw}. "
+				},
+				"redeem(uint256,address,address)": {
+					"details": "See {IERC4626-redeem}. "
+				},
+				"renounceRole(bytes32,address)": {
+					"details": "See {AccessControl-renounceRole}. For the `DEFAULT_ADMIN_ROLE`, it only allows renouncing in two steps by first calling {beginDefaultAdminTransfer} to the `address(0)`, so it's required that the {pendingDefaultAdmin} schedule has also passed when calling this function. After its execution, it will not be possible to call `onlyRole(DEFAULT_ADMIN_ROLE)` functions. NOTE: Renouncing `DEFAULT_ADMIN_ROLE` will leave the contract without a {defaultAdmin}, thereby disabling any functionality that is only available for it, and the possibility of reassigning a non-administrated role."
+				},
+				"revokeRole(bytes32,address)": {
+					"details": "See {AccessControl-revokeRole}. Reverts for `DEFAULT_ADMIN_ROLE`."
+				},
+				"rewardFee()": {
+					"returns": {
+						"_0": "rewardFee The reward fee."
+					}
+				},
+				"rollbackDefaultAdminDelay()": {
+					"details": "Cancels a scheduled {defaultAdminDelay} change. Requirements: - Only can be called by the current {defaultAdmin}. May emit a DefaultAdminDelayChangeCanceled event."
+				},
+				"setAdditionalRewardsStrategy(uint8)": {
+					"params": {
+						"strategy": "The new additional rewards strategy."
+					}
+				},
+				"setBlockList(address)": {
+					"params": {
+						"newBlockList": "The new sanctions list."
+					}
+				},
+				"setDepositFee(uint256)": {
+					"params": {
+						"newDepositFee": "The new deposit fee."
+					}
+				},
+				"setFeeRecipients((address,uint256,uint256)[])": {
+					"params": {
+						"recipients": "The array of fee recipients."
+					}
+				},
+				"setRewardFee(uint256)": {
+					"details": "This function also collects the last reward fees prior to updating the fee.",
+					"params": {
+						"newRewardFee": "The new reward fee."
+					}
+				},
+				"supportsInterface(bytes4)": {
+					"details": "See {IERC165-supportsInterface}."
+				},
+				"symbol()": {
+					"details": "Returns the symbol of the token, usually a shorter version of the name."
+				},
+				"totalAssets()": {
+					"details": "See {IERC4626-totalAssets}. "
+				},
+				"totalSupply()": {
+					"details": "See {IERC20-totalSupply}."
+				},
+				"transfer(address,uint256)": {
+					"details": "Moves a `value` amount of tokens from the caller's account to `to`. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
+				},
+				"transferFrom(address,address,uint256)": {
+					"details": "See {IERC20-transferFrom}. Skips emitting an {Approval} event indicating an allowance update. This is not required by the ERC. See {xref-ERC20-_approve-address-address-uint256-bool-}[_approve]. NOTE: Does not update the allowance if the current allowance is the maximum `uint256`. Requirements: - `from` and `to` cannot be the zero address. - `from` must have a balance of at least `value`. - the caller must have allowance for ``from``'s tokens of at least `value`."
+				},
+				"transferable()": {
+					"returns": {
+						"_0": "transferable True if the ERC4626 share is transferable, False if not."
+					}
+				},
+				"upgrade(((address,uint256,uint256)[],address,uint8,address,uint256,uint256,address,address))": {
+					"params": {
+						"upgradeParams": "The upgrade parameters for the upgrade."
+					}
+				},
+				"withdraw(uint256,address,address)": {
+					"details": "See {IERC4626-withdraw}. "
+				}
+			},
+			"stateVariables": {
+				"SPENDER_ROLE": {
+					"details": "Only used in conjunction with ExternalAccessControl to verify if a user has this role."
+				},
+				"VaultStorageLocation": {
+					"details": "The storage slot of the VaultStorage struct in the proxy contract.      keccak256(abi.encode(uint256(keccak256(\"kiln.storage.vault\")) - 1)) & ~bytes32(uint256(0xff))"
+				},
+				"_MAX_FEE": {
+					"details": "Represents the maximum fee that can be charged for reward and deposit fees."
+				},
+				"_MAX_OFFSET": {
+					"details": "Represents the maximum offset."
+				},
+				"_externalAccessControl": {
+					"details": "The external access control proxy contract."
+				},
+				"_self": {
+					"details": "The address of the implementation (regardless of the context)."
+				},
+				"vaultFactory": {
+					"details": "The factory address."
+				}
+			},
+			"title": "Kiln DeFi Integration Vault.",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"CLAIM_MANAGER_ROLE()": {
+					"notice": "The role code for the claim manager."
+				},
+				"FEE_COLLECTOR_ROLE()": {
+					"notice": "The role code for fee collector."
+				},
+				"FEE_MANAGER_ROLE()": {
+					"notice": "The role code for the fee manager."
+				},
+				"PAUSER_ROLE()": {
+					"notice": "The role code for the pauser role."
+				},
+				"SANCTIONS_MANAGER_ROLE()": {
+					"notice": "The role code for the sanctions manager."
+				},
+				"SPENDER_ROLE()": {
+					"notice": "The role code for the spender role."
+				},
+				"UNPAUSER_ROLE()": {
+					"notice": "The role code for the unpauser role."
+				},
+				"additionalRewardsStrategy()": {
+					"notice": "Returns the additional rewards strategy."
+				},
+				"blockList()": {
+					"notice": "Returns the blocklist."
+				},
+				"claimAdditionalRewards(address,bytes)": {
+					"notice": "Claims additional rewards to the underlying protocol."
+				},
+				"collectRewardFees()": {
+					"notice": "Collects the reward fees."
+				},
+				"collectableRewardFees()": {
+					"notice": "Returns the collectable reward fees (when calling `collectRewardFees`)."
+				},
+				"connectorName()": {
+					"notice": "Returns the connector name."
+				},
+				"connectorRegistry()": {
+					"notice": "Returns the connector registry."
+				},
+				"constructor": {
+					"notice": "Initializes the Vault contract (implementation)."
+				},
+				"delegateToFactory(bytes)": {
+					"notice": "Perform an arbitrary delegatecall to the factory.         Needed for migration purposes (e.g. to access an unused storage slot)."
+				},
+				"depositFee()": {
+					"notice": "Returns the deposit fee."
+				},
+				"dispatchFees()": {
+					"notice": "Dispatches the collected fees to the fee recipients."
+				},
+				"feeRecipient(address)": {
+					"notice": "Returns the fee recipient details for a given address."
+				},
+				"feeRecipientAt(uint256)": {
+					"notice": "Returns the fee recipient details at a given index."
+				},
+				"feeRecipients()": {
+					"notice": "Returns the list of fee recipients."
+				},
+				"forceWithdraw(address)": {
+					"notice": "Force withdraws a user from the vault."
+				},
+				"initialize((address,string,string,bool,address,bytes32,uint256,uint256,address,address,address,address,address,address,uint48,uint8,uint256),((address,uint256,uint256)[],address,uint8,address,uint256,uint256,address,address))": {
+					"notice": "Initializes the contract in the proxy context."
+				},
+				"pauseDeposit()": {
+					"notice": "Pauses the deposit."
+				},
+				"pendingDepositFee()": {
+					"notice": "Returns the pending deposit fee."
+				},
+				"pendingRewardFee()": {
+					"notice": "Returns the pending reward fee."
+				},
+				"rewardFee()": {
+					"notice": "Returns the reward fee."
+				},
+				"setAdditionalRewardsStrategy(uint8)": {
+					"notice": "Update the additional rewards strategy."
+				},
+				"setBlockList(address)": {
+					"notice": "Sets the blocklist."
+				},
+				"setDepositFee(uint256)": {
+					"notice": "Sets the deposit fee."
+				},
+				"setFeeRecipients((address,uint256,uint256)[])": {
+					"notice": "Sets the fee recipients."
+				},
+				"setRewardFee(uint256)": {
+					"notice": "Sets the reward fee."
+				},
+				"transferable()": {
+					"notice": "Returns if the ERC4626 share is transferable."
+				},
+				"unpauseDeposit()": {
+					"notice": "Unpauses the deposit."
+				},
+				"upgrade(((address,uint256,uint256)[],address,uint8,address,uint256,uint256,address,address))": {
+					"notice": "Upgrades the contract in the proxy context."
+				}
+			},
+			"notice": "ERC-4626 Vault depositing assets into a protocol.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"MetaVault/src/MetaVault.Contracts/Vault.sol": "Vault"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol": {
+			"keccak256": "0x6662ec4e5cefca03eeadd073e9469df8d2944bb2ee8ec8f7622c2c46aab5f225",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4d8544c6f8daa4d1bc215c6a72fe0acdb748664a105b0e5efc19295667521d45",
+				"dweb:/ipfs/QmdGWqdnXT8S3RgCR6aV8XHZrsybieMQLLnug1NtpSjEXN"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol": {
+			"keccak256": "0x956cbd3e346c8ff9b9e51b6e414f23b056198016f805eb04c6634946a10760af",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d2b6578d7ddfb0bf8c00edf3d21fa1f8063c41a2d478eef2a0f04ee0900e9c5e",
+				"dweb:/ipfs/QmahbtHqGXJxthFT7oiZCkQfw7cezVAZpkWdrhS9xWZ9xy"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol": {
+			"keccak256": "0x631188737069917d2f909d29ce62c4d48611d326686ba6683e26b72a23bfac0b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7a61054ae84cd6c4d04c0c4450ba1d6de41e27e0a2c4f1bcdf58f796b401c609",
+				"dweb:/ipfs/QmUvtdp7X1mRVyC3CsHrtPbgoqWaXHp3S1ZR24tpAQYJWM"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol": {
+			"keccak256": "0x5c54228bbb2f1f8616179c51bdb90b7960f4a3414c390ad5c6ead6763eb55a59",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://745fe72596bb8fde5f294d9d6b943db942202e4445536ee00da3ba011f876e86",
+				"dweb:/ipfs/QmcjeESkk4rbhUVaSBfyq5f8rY56Jms1TwcJXaRD55K3UH"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol": {
+			"keccak256": "0xa683afe511eb3a2e8a039c5aa18feda651c6de04b92e101532ac76661fdaad8f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d2117b118221d039e98d77bef9b0b68e95b600403f16aa1b565e3d6c0bcd6384",
+				"dweb:/ipfs/QmZAhSMkC257uzT16gLkkuS1q7sLRos1Euj1oPMJXg8rSh"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol": {
+			"keccak256": "0xdbef5f0c787055227243a7318ef74c8a5a1108ca3a07f2b3a00ef67769e1e397",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://08e39f23d5b4692f9a40803e53a8156b72b4c1f9902a88cd65ba964db103dab9",
+				"dweb:/ipfs/QmPKn6EYDgpga7KtpkA8wV2yJCYGMtc9K4LkJfhKX2RVSV"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol": {
+			"keccak256": "0x361126a17677994081cd9cb69c3f50cffff6e920d25cb7e428acdb1ae41d1866",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://19ae787a7dd001269cd60a394b1a5261b78925a0fc3a6f927beb2986a9aa56cf",
+				"dweb:/ipfs/QmYLfXiuKmcRgTDBEDXMMjXU8t6JxsspUmjxYzqWS55oEv"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol": {
+			"keccak256": "0xc8ed8d2056934b7675b695dec032f2920c2f5c6cf33a17ca85650940675323ab",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3c8ccc75d1cd792d192aa09e54dd49ea35fe85baa9fcd17486f29227d9f29b89",
+				"dweb:/ipfs/QmbboSbFUEiM9tdEgBwuTRb7bykFoJXZ7dsSr1PSREJXMr"
+			]
+		},
+		"@openzeppelin/contracts/access/IAccessControl.sol": {
+			"keccak256": "0xc1c2a7f1563b77050dc6d507db9f4ada5d042c1f6a9ddbffdc49c77cdc0a1606",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fd54abb96a6156d9a761f6fdad1d3004bc48d2d4fce47f40a3f91a7ae83fc3a1",
+				"dweb:/ipfs/QmUrFSGkTDJ7WaZ6qPVVe3Gn5uN2viPb7x7QQ35UX4DofX"
+			]
+		},
+		"@openzeppelin/contracts/access/extensions/IAccessControlDefaultAdminRules.sol": {
+			"keccak256": "0x094d9bafd5008e2e3b53e40b0ca75173cec4e2c81cf2572ddbef07d375976580",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://caa28b73830478c39706023a757ce6cc138c396d94300fbcc927998a139f8b7e",
+				"dweb:/ipfs/QmYVS9731qEJhuMMsU6vqrkdGxq2pxdXcvmtGTNSntAsAE"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC1363.sol": {
+			"keccak256": "0x9b6b3e7803bc5f2f8cd7ad57db8ac1def61a9930a5a3107df4882e028a9605d7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://da62d6be1f5c6edf577f0cb45666a8aa9c2086a4bac87d95d65f02e2f4c36a4b",
+				"dweb:/ipfs/QmNkpvBpoCMvX8JwAFNSc5XxJ2q5BXJpL5L1txb4QkqVFF"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC165.sol": {
+			"keccak256": "0xde7e9fd9aee8d4f40772f96bb3b58836cbc6dfc0227014a061947f8821ea9724",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://11fea9f8bc98949ac6709f0c1699db7430d2948137aa94d5a9e95a91f61a710a",
+				"dweb:/ipfs/QmQdfRXxQjwP6yn3DVo1GHPpriKNcFghSPi94Z1oKEFUNS"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC20.sol": {
+			"keccak256": "0xce41876e78d1badc0512229b4d14e4daf83bc1003d7f83978d18e0e56f965b9c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a2608291cb038b388d80b79a06b6118a42f7894ff67b7da10ec0dbbf5b2973ba",
+				"dweb:/ipfs/QmWohqcBLbcxmA4eGPhZDXe5RYMMEEpFq22nfkaUMvTfw1"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC4626.sol": {
+			"keccak256": "0x666c704c58d4cf404eecd6e4a898a87e25b00b45416678de914e160582c3ff17",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6def3cc823ae3f155da28a241a8ff91538222053ed9d78f415758a9133e211a1",
+				"dweb:/ipfs/QmSriniszojh4UP4WQqxCJhq2XsbCAULcB4qRij4EYw9Gi"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC5313.sol": {
+			"keccak256": "0x22412c268e74cc3cbf550aecc2f7456f6ac40783058e219cfe09f26f4d396621",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0b841021f25480424d2359de4869e60e77f790f52e8e85f07aa389543024b559",
+				"dweb:/ipfs/QmV7U5ehV5xe3QrbE8ErxfWSSzK1T1dGeizXvYPjWpNDGq"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
+			"keccak256": "0x880da465c203cec76b10d72dbd87c80f387df4102274f23eea1f9c9b0918792b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://399594cd8bb0143bc9e55e0f1d071d0d8c850a394fb7a319d50edd55d9ed822b",
+				"dweb:/ipfs/QmbPZzgtT6LEm9CMqWfagQFwETbV1ztpECBB1DtQHrKiRz"
+			]
+		},
+		"@openzeppelin/contracts/proxy/utils/Initializable.sol": {
+			"keccak256": "0x631188737069917d2f909d29ce62c4d48611d326686ba6683e26b72a23bfac0b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7a61054ae84cd6c4d04c0c4450ba1d6de41e27e0a2c4f1bcdf58f796b401c609",
+				"dweb:/ipfs/QmUvtdp7X1mRVyC3CsHrtPbgoqWaXHp3S1ZR24tpAQYJWM"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xe06a3f08a987af6ad2e1c1e774405d4fe08f1694b67517438b467cecf0da0ef7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://df6f0c459663c9858b6cba2cda1d14a7d05a985bed6d2de72bd8e78c25ee79db",
+				"dweb:/ipfs/QmeTTxZ7qVk9rjEv2R4CpCwdf8UMCcRqDNMvzNxHc3Fnn9"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+			"keccak256": "0x70f2f713b13b7ce4610bcd0ac9fec0f3cc43693b043abcb8dc40a42a726eb330",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c13d13304ac79a83ab1c30168967d19e2203342ebbd6a9bbce4db7550522dcbf",
+				"dweb:/ipfs/QmeN5jKMN2vw5bhacr6tkg78afbTTZUeaacNHqjWt4Ew1r"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+			"keccak256": "0x4ea01544758fd2c7045961904686bfe232d2220a04ecaa2d6b08dac17827febf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fabe6bef5167ae741dd8c22d7f81d3f9120bd61b290762a2e8f176712567d329",
+				"dweb:/ipfs/QmSnEitJ6xmf1SSAUeZozD7Gx7h8bNnX3a1ZBzqeivsvVg"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e",
+				"dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR"
+			]
+		},
+		"@openzeppelin/contracts/utils/Errors.sol": {
+			"keccak256": "0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf",
+				"dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB"
+			]
+		},
+		"@openzeppelin/contracts/utils/Panic.sol": {
+			"keccak256": "0xf7fe324703a64fc51702311dc51562d5cb1497734f074e4f483bfb6717572d7a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c6a5ff4f9fd8649b7ee20800b7fa387d3465bd77cf20c2d1068cd5c98e1ed57a",
+				"dweb:/ipfs/QmVSaVJf9FXFhdYEYeCEfjMVHrxDh5qL4CGkxdMWpQCrqG"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x79796192ec90263f21b464d5bc90b777a525971d3de8232be80d9c4f9fb353b8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
+				"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/Math.sol": {
+			"keccak256": "0xa00be322d7db5786750ce0ac7e2f5b633ac30a5ed5fa1ced1e74acfc19acecea",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6c84e822f87cbdc4082533b626667b6928715bb2b1e8e7eb96954cebb9e38c8d",
+				"dweb:/ipfs/QmZmy9dgxLTerBAQDuuHqbL6EpgRxddqgv5KmwpXYVbKz1"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/SafeCast.sol": {
+			"keccak256": "0x195533c86d0ef72bcc06456a4f66a9b941f38eb403739b00f21fd7c1abd1ae54",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b1d578337048cad08c1c03041cca5978eff5428aa130c781b271ad9e5566e1f8",
+				"dweb:/ipfs/QmPFKL2r9CBsMwmUqqdcFPfHZB2qcs9g1HDrPxzWSxomvy"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/BlockList.sol": {
+			"keccak256": "0x6d74489d22bba5b81dd4f11c20e329b9ef58382f0dddb80c0c79d99636aaeca9",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://c14aa5d100a8e0860ee31b462bcd9ec0ad37e9102074a82fcc305af19d2e7d29",
+				"dweb:/ipfs/QmUQJbvQ8tx7AKgbKjpvg7MpNzX2pf9svVaquqJ25Evnhb"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/Vault.sol": {
+			"keccak256": "0x07efc4b9de866e3127ffa59a7cd1f6974cfc5c46dc644abe5db7f1ba2a0bc830",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://255ee5861bf2ef5ec27bdc7747c431e2efd372eb34a86e25fe9bc56c9a435abc",
+				"dweb:/ipfs/QmbFdjnxYSXYBPF35Km4H5QHxnxNX1eh5A7XqLu5Ryorv5"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/interfaces/IConnector.sol": {
+			"keccak256": "0x7a70f6ba7fb099456e8fb962e0b920c5e152f745a84ce6c614822008faea0009",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://63e5bd300634756e4eb2f9bf0d456eda67e7bdc0b0da512ac2a1afd72c37e1b5",
+				"dweb:/ipfs/QmNWTPLvtMJFP76hoHfsgxTuR6PBNpp8WDbGe4wnYj8tcU"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/interfaces/IConnectorRegistry.sol": {
+			"keccak256": "0x58cc9af1736329170cac8c39a5cbad5c37d2a766ae85e8d647bc4212f9b09b57",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://60fa3dbaebf1a78e49a1f6eb0f712b9825f49543b454a14c0819c4d9dfd26afb",
+				"dweb:/ipfs/QmbnW6NmcUbsQ3RBRyUYmWsxnWykuXhCieozhUQC9VG1x3"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/interfaces/IFeeDispatcher.sol": {
+			"keccak256": "0x1ea014219c1c9820068946bb97450d4fbf4ef36e405511152e7230677cd5806a",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://dd594a52b2ed2a07c440b3e97a765c4f600e204a0caad286ab43085e8d70ce9f",
+				"dweb:/ipfs/Qme76ZWjekdbt9f1kTEyYugu4buLPDBCj9HicvKHUReAmN"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/interfaces/ISanctionsList.sol": {
+			"keccak256": "0xe2565a976f513c6fe4c1a4a27a50280ae1528011c2019ff1136aedf0936a9701",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://8ee56158e15a7f3a75c87800ca58e64989ef07aae6ae0f3a970636537ab6169e",
+				"dweb:/ipfs/QmR99B8QhHRroiL6kWuk9o1XdpXwoP1wASncgZN4ZutzXX"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/interfaces/ISelf.sol": {
+			"keccak256": "0x501fb138a2d082877fd5c94222efed3899a8ae65dd373b449ed40fecfc35c497",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://d5f961d0bdb3c24896455b1f7eaba9acf36f2f889582996b207b60ab41951ed4",
+				"dweb:/ipfs/QmU6cCJUJKagwZzAXs7Dd1fLmzud5N9VZz7bjEvzYxz9Px"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/libraries/Constants.sol": {
+			"keccak256": "0x1a9c77783dd67ad5b0d70ca5929a6ba73d24447dc511c7fc16240c44f7370395",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://d621c41a2a7233a6173779f4c7b30e096bfe8c683272aba73c289f1dc5d72cb2",
+				"dweb:/ipfs/QmVjBZd9mnToeZYtp5hG7NtKgde2ot4skecUTWzcnSZXe1"
+			]
+		},
+		"MetaVault/src/MetaVault.Contracts/libraries/Errors.sol": {
+			"keccak256": "0xc23cee4e140cc1e3bcc595daf9d492ceb71fc25d4f63a311341f26fcb10fd63d",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://a26b17019bfa0bbb684b64f2bb98eb67639cbb172692c0b9280fbd516b1cda51",
+				"dweb:/ipfs/QmWP2NvaXRH8QoRaqqxsz1ahBqRmtAy5K5Nb83RSoDsz8B"
+			]
+		}
+	},
+	"version": 1
+}

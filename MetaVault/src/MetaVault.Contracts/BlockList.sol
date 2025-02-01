@@ -10,8 +10,7 @@
 //
 pragma solidity 0.8.22;
 
-import {AccessControlDefaultAdminRulesUpgradeable} from
-    "@openzeppelin-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol";
+import {AccessControlDefaultAdminRulesUpgradeable} from "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol";
 import {Initializable} from "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
 import {ISanctionsList} from "./interfaces/ISanctionsList.sol";
