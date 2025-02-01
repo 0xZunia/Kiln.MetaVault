@@ -3,7 +3,13 @@ import { ColorModeButton } from "../ui/color-mode";
 
 export function Header({ heading }: { heading: string }) {
 	return (
-		<Container zIndex={"sticky"} position={"sticky"} top={3} left={0}>
+		<Container
+			zIndex={"sticky"}
+			position={"sticky"}
+			top={3}
+			left={0}
+			padding={0}
+		>
 			<HStack
 				justify={"space-between"}
 				paddingY={2}
