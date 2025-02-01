@@ -1,7 +1,8 @@
 import { Container, HStack, Heading } from "@chakra-ui/react";
-import { ColorModeButton } from "../ui/color-mode";
 import { useLocation } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { ColorModeButton } from "../ui/color-mode";
+import { DisconnectButton } from "../web3/disconnectButton";
 
 const pathToTitle: { [key: string]: string } = {
 	"/": "Dashboard",
@@ -37,6 +38,7 @@ export function Header() {
 				bgColor={"bg"}
 			>
 				<Heading>{title}</Heading>
+				<DisconnectButton />
 				<ColorModeButton />
 			</HStack>
 		</Container>

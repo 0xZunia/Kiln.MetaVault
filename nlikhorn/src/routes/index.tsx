@@ -1,6 +1,6 @@
+import { TotalFounds } from "@/components/custom/MetaVault";
 import { Grid, GridItem, Skeleton } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { TotalFounds } from "@/components/custom/MetaVault";
 
 export const Route = createFileRoute("/")({
 	component: Index,
