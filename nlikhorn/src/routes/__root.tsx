@@ -1,12 +1,13 @@
 import { Header } from "@/components/custom/Header";
 import { NavBar } from "@/components/custom/NavBar";
+import { SimpleLoader } from "@/components/custom/simpleLoader";
 import { ConnectButton } from "@/components/web3/connectButton";
-import { Center, Container, Loader } from "@chakra-ui/react";
+import { Center, Container } from "@chakra-ui/react";
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { useAccount } from "wagmi";
 
 export const Route = createRootRoute({
-	loader: () => <Loader />,
+	loader: () => <SimpleLoader />,
 	component: RootLayout,
 });
 
