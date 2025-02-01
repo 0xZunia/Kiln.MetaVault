@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@chakra-ui/react": "^3.5.1",
 		"@emotion/react": "^11.14.0",
+		"@tanstack/react-router": "^1.99.0",
 		"next-themes": "^0.4.4",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
@@ -19,6 +20,8 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.17.0",
+		"@tanstack/router-devtools": "^1.99.0",
+		"@tanstack/router-plugin": "^1.99.0",
 		"@types/react": "^18.3.18",
 		"@types/react-dom": "^18.3.5",
 		"@vitejs/plugin-react": "^4.3.4",
