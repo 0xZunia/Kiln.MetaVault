@@ -112,7 +112,7 @@ function DemoMetaVaultTest() {
 							onClick={handleRemoveVault}
 							loading={addVaultPending}
 							disabled={
-								!activeVaults.some(
+								!activeVaults?.some(
 									(vault) =>
 										vault.toLowerCase() === vaultAddress[0].toLowerCase(),
 								)
