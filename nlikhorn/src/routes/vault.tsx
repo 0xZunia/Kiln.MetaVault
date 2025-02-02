@@ -1,9 +1,12 @@
-import { TotalFounds } from "@/components/custom/MetaVault";
 import { SimpleLoader } from "@/components/custom/simpleLoader";
 import { Avatar } from "@/components/ui/avatar";
+import { AddVaultButton } from "@/components/web3/addVaultButton";
+import { RemoveVaultButton } from "@/components/web3/removeVaultButton";
 import { useGetMetaVault } from "@/hooks/factory";
+import { useGetCurrentMetaVault } from "@/hooks/metaVault";
 import { addressConfig } from "@/utils/addressConfig";
 import { factoryABI } from "@/utils/factoryABI";
+import { fetchOnKiln } from "@/utils/kilnConnectFetch";
 import { metaVaultABI } from "@/utils/metaVaultABI";
 import {
 	Button,
@@ -12,7 +15,6 @@ import {
 	FormatNumber,
 	Grid,
 	GridItem,
-	IconButton,
 	Skeleton,
 	Stat,
 	Text,
@@ -20,7 +22,6 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { LuPlus } from "react-icons/lu";
 import { useAccount, useReadContract, useWriteContract } from "wagmi";
 
 export const Route = createFileRoute("/vault")({
@@ -47,7 +48,7 @@ function RouteComponent() {
 		return <CreateVaultCard />;
 	}
 
-	return <VaultListing vaultAddress={vaultAddress as `0x${string}`} />;
+	return <VaultListing />;
 }
 
 function CreateVaultCard() {
@@ -81,26 +82,7 @@ function CreateVaultCard() {
 	);
 }
 
-function VaultListing({ vaultAddress }: { vaultAddress: `0x${string}` }) {
-	// Getter
-	const { data: allocation } = useReadContract({
-		abi: metaVaultABI,
-		address: vaultAddress,
-		functionName: "getTotalAllocation",
-	});
-	const { data: getActiveVaults } = useReadContract({
-		abi: metaVaultABI,
-		address: vaultAddress,
-		functionName: "getActiveVaults",
-	});
-	const { data: shouldRebalance } = useReadContract({
-		abi: metaVaultABI,
-		address: vaultAddress,
-		functionName: "shouldRebalance",
-	});
-	// TODO: rm this
-	console.log({ allocation, getActiveVaults, shouldRebalance });
-
+function VaultListing() {
 	// Create a query using tanstack/react-query
 	const { data: vaultList, isLoading } = useQuery({
 		queryKey: ["kiln_vaults"],
@@ -117,6 +99,7 @@ function VaultListing({ vaultAddress }: { vaultAddress: `0x${string}` }) {
 
 	const ethVaultsAddr = useMemo(() => {
 		const ret = addressConfig.VAULT_ADDRESS;
+
 		if (vaultList) {
 			ret.push(
 				...vaultList
@@ -146,10 +129,8 @@ function VaultListing({ vaultAddress }: { vaultAddress: `0x${string}` }) {
 			gridTemplateRows={"repeat(2, auto)"}
 			gap={2}
 		>
-			<TotalFounds />
-			<Skeleton id="total founds" width={"full"} />
 			<GridItem colSpan={2}>
-				<Skeleton loading={isLoading}>
+				<Skeleton loading={isLoading} height={"full"}>
 					<Card.Root>
 						<Card.Body>
 							<Card.Title>Vaults kiln</Card.Title>
@@ -231,22 +212,17 @@ export type NetworkStats = {
 };
 
 function NetworkStatsItem({ stats }: { stats: NetworkStats }) {
-	// const { vaultAddress: metaVaultAddress } = useGetCurrentMetaVault();
-	// const { writeContract, isPending: addVaultIsPending } = useWriteContract();
+	const { vaultAddress } = useGetCurrentMetaVault();
 
-	// const { handleSubmit } = useForm();
+	const { data: getActiveVaults } = useReadContract({
+		abi: metaVaultABI,
+		address: vaultAddress,
+		functionName: "getActiveVaults",
+	});
 
-	// const onSubmit = handleSubmit((data) => {});
-	// const handleAddVault = (vaultAddress: string) => {
-	// 	return () => {
-	// 		writeContract({
-	// 			abi: metaVaultABI,
-	// 			address: metaVaultAddress as `0x${string}`,
-	// 			functionName: "addVault",
-	// 			args: [vaultAddress as `0x${string}`, 10n],
-	// 		});
-	// 	};
-	// };
+	const isActive = getActiveVaults?.some(
+		(vault) => vault.toLowerCase() === stats.vault.toLowerCase(),
+	);
 
 	return (
 		<DataList.Item>
@@ -270,28 +246,12 @@ function NetworkStatsItem({ stats }: { stats: NetworkStats }) {
 					<Stat.ValueText>{stats.chain}</Stat.ValueText>
 				</Stat.Root>
 
-				{/* TODO: add vault to metavault onClick */}
-				<IconButton
-					alignSelf={"center"}
-					colorPalette={"green"}
-					rounded={"full"}
-					// onClick={handleAddVault(stats.vault)}
-				>
-					<LuPlus />
-				</IconButton>
+				{isActive ? (
+					<RemoveVaultButton vaultAddress={stats.vault} />
+				) : (
+					<AddVaultButton vaultAddress={stats.vault} />
+				)}
 			</DataList.ItemValue>
 		</DataList.Item>
 	);
-}
-
-/* Utils */
-async function fetchOnKiln(path: string) {
-	return fetch(
-		`https://api${import.meta.env.DEV && ".testnet"}.kiln.fi/v1${path}`,
-		{
-			headers: {
-				Authorization: `Bearer ${import.meta.env.VITE_KILN_API_KEY}`,
-			},
-		},
-	).then((res) => res.json());
 }
