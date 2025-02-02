@@ -12,6 +12,8 @@ import {
 	FormatNumber,
 	Grid,
 	GridItem,
+	HStack,
+	Separator,
 	Skeleton,
 	Stat,
 	Text,
@@ -135,6 +137,11 @@ function VaultListing() {
 								{networkStats?.map((stats) => (
 									<NetworkStatsItem key={stats.vault} stats={stats} />
 								))}
+								<HStack>
+									<Separator flex="1" />
+									<Text flexShrink="0">Not available now</Text>
+									<Separator flex="1" />
+								</HStack>
 								{vaultList
 									?.filter((vault) => vault.chain !== "eth")
 									.map((vault) => (
