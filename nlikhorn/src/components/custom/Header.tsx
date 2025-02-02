@@ -1,4 +1,4 @@
-import { Container, HStack, Heading } from "@chakra-ui/react";
+import { Image, Container, HStack, Heading } from "@chakra-ui/react";
 import { useLocation } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ColorModeButton } from "../ui/color-mode";
@@ -37,6 +37,7 @@ export function Header() {
 				colorPalette={"orange"}
 				bgColor={"bg"}
 			>
+				<Image src="../../../public/nlik.svg" bg={"bg.subtle"} />
 				<Heading>{title}</Heading>
 				<HStack>
 					<DisconnectButton />
