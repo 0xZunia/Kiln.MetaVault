@@ -6,21 +6,21 @@ import { addressConfig } from "@/utils/addressConfig";
 import { factoryABI } from "@/utils/factoryABI";
 import { metaVaultABI } from "@/utils/metaVaultABI";
 import {
-	Box,
 	Button,
 	Card,
-	Grid,
-	HStack,
-	Skeleton,
-	VStack,
-	Text,
-	GridItem,
-	Stat,
+	DataList,
 	FormatNumber,
+	Grid,
+	GridItem,
+	IconButton,
+	Skeleton,
+	Stat,
+	Text,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
+import { LuPlus } from "react-icons/lu";
 import { useAccount, useReadContract, useWriteContract } from "wagmi";
 
 export const Route = createFileRoute("/vault")({
@@ -47,7 +47,7 @@ function RouteComponent() {
 		return <CreateVaultCard />;
 	}
 
-	return <VaultManager vaultAddress={vaultAddress as `0x${string}`} />;
+	return <VaultListing vaultAddress={vaultAddress as `0x${string}`} />;
 }
 
 function CreateVaultCard() {
@@ -81,7 +81,7 @@ function CreateVaultCard() {
 	);
 }
 
-function VaultManager({ vaultAddress }: { vaultAddress: `0x${string}` }) {
+function VaultListing({ vaultAddress }: { vaultAddress: `0x${string}` }) {
 	// Getter
 	const { data: allocation } = useReadContract({
 		abi: metaVaultABI,
@@ -98,20 +98,14 @@ function VaultManager({ vaultAddress }: { vaultAddress: `0x${string}` }) {
 		address: vaultAddress,
 		functionName: "shouldRebalance",
 	});
+	// TODO: rm this
 	console.log({ allocation, getActiveVaults, shouldRebalance });
 
 	// Create a query using tanstack/react-query
 	const { data: vaultList, isLoading } = useQuery({
 		queryKey: ["kiln_vaults"],
 		queryFn: async () => {
-			const resp = await fetch(
-				`https://api${import.meta.env.DEV && ".testnet"}.kiln.fi/v1/deployments`,
-				{
-					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_KILN_API_KEY}`,
-					},
-				},
-			).then((res) => res.json());
+			const resp = await fetchOnKiln("/deployments");
 
 			const activeVaults = resp?.data.filter(
 				(vault: Vault) => vault.status === "active",
@@ -121,10 +115,35 @@ function VaultManager({ vaultAddress }: { vaultAddress: `0x${string}` }) {
 		},
 	});
 
+	const ethVaultsAddr = useMemo(() => {
+		const ret = addressConfig.VAULT_ADDRESS;
+		if (vaultList) {
+			ret.push(
+				...vaultList
+					.filter((v) => v.chain === "eth")
+					.map((v) => v.address as `0x${string}`),
+			);
+		}
+		return ret;
+	}, [vaultList]);
+
+	const { data: networkStats } = useQuery({
+		queryKey: ["kiln_stats"],
+		queryFn: async () => {
+			const resp = await fetchOnKiln(
+				`/defi/network-stats?vaults=${ethVaultsAddr.map((addr) => `eth_${addr}`).join(",")}`,
+			);
+
+			const stats = resp?.data;
+
+			return stats as NetworkStats[];
+		},
+	});
+
 	return (
 		<Grid
 			gridTemplateColumns={"repeat(2, 1fr)"}
-			gridTemplateRows={"repeat(2, 1fr)"}
+			gridTemplateRows={"repeat(2, auto)"}
 			gap={2}
 		>
 			<TotalFounds />
@@ -134,11 +153,16 @@ function VaultManager({ vaultAddress }: { vaultAddress: `0x${string}` }) {
 					<Card.Root>
 						<Card.Body>
 							<Card.Title>Vaults kiln</Card.Title>
-							<VStack align="left">
-								{vaultList?.map((vault) => (
-									<VaultItem key={vault.id} vault={vault} />
+							<DataList.Root orientation="horizontal" divideY="1px">
+								{networkStats?.map((stats) => (
+									<NetworkStatsItem key={stats.vault} stats={stats} />
 								))}
-							</VStack>
+								{vaultList
+									?.filter((vault) => vault.chain !== "eth")
+									.map((vault) => (
+										<VaultItem key={vault.id} vault={vault} />
+									))}
+							</DataList.Root>
 						</Card.Body>
 					</Card.Root>
 				</Skeleton>
@@ -164,30 +188,25 @@ export type Vault = {
 };
 
 function VaultItem({ vault }: { vault: Vault }) {
-	if (vault.chain === "eth") {
-		const { data: networkStats, isLoading } = useQuery({
-			queryKey: ["kiln_stats"],
-			queryFn: async () => {
-				const resp = await fetch(
-					`https://api${import.meta.env.DEV && ".testnet"}.kiln.fi/v1/defi/network-stats?vaults=eth_${vault.address}`,
-					{
-						headers: {
-							Authorization: `Bearer ${import.meta.env.VITE_KILN_API_KEY}`,
-						},
-					},
-				).then((res) => res.json());
-
-				const activeVaults = resp?.data[0];
-
-				return activeVaults as NetworkStats;
-			},
-		});
-
-		if (!networkStats) return;
-		return <NetworkStatsItem stats={networkStats} />;
-	}
-
-	return <Box>{vault.display_name}</Box>;
+	return (
+		<DataList.Item>
+			<DataList.ItemLabel>
+				<Avatar size={"xs"} />
+				{vault.display_name}
+			</DataList.ItemLabel>
+			<DataList.ItemValue gap={2}>
+				<Stat.Root>
+					<Stat.Label>NRR</Stat.Label>
+					<Stat.ValueText>--</Stat.ValueText>
+				</Stat.Root>
+				<Stat.Root>
+					<Stat.Label>Chain</Stat.Label>
+					<Stat.ValueText>{vault.chain}</Stat.ValueText>
+				</Stat.Root>
+				<Text>Comming soon...</Text>
+			</DataList.ItemValue>
+		</DataList.Item>
+	);
 }
 
 export type NetworkStats = {
@@ -212,21 +231,67 @@ export type NetworkStats = {
 };
 
 function NetworkStatsItem({ stats }: { stats: NetworkStats }) {
+	// const { vaultAddress: metaVaultAddress } = useGetCurrentMetaVault();
+	// const { writeContract, isPending: addVaultIsPending } = useWriteContract();
+
+	// const { handleSubmit } = useForm();
+
+	// const onSubmit = handleSubmit((data) => {});
+	// const handleAddVault = (vaultAddress: string) => {
+	// 	return () => {
+	// 		writeContract({
+	// 			abi: metaVaultABI,
+	// 			address: metaVaultAddress as `0x${string}`,
+	// 			functionName: "addVault",
+	// 			args: [vaultAddress as `0x${string}`, 10n],
+	// 		});
+	// 	};
+	// };
+
 	return (
-		<HStack>
-			<Avatar src={stats.asset_icon} size={"xs"} />
-			<Text>{stats.protocol_display_name}</Text>
-			<Stat.Root>
-				<Stat.Label>NRR</Stat.Label>
-				<Stat.ValueText>
-					<FormatNumber
-						value={stats.nrr / 100}
-						style="percent"
-						maximumFractionDigits={2}
-					/>
-				</Stat.ValueText>
-			</Stat.Root>
-			<Text>{stats.chain}</Text>
-		</HStack>
+		<DataList.Item>
+			<DataList.ItemLabel>
+				<Avatar src={stats.asset_icon} size={"xs"} />
+				{stats.protocol_display_name}
+			</DataList.ItemLabel>
+			<DataList.ItemValue>
+				<Stat.Root>
+					<Stat.Label>NRR</Stat.Label>
+					<Stat.ValueText>
+						<FormatNumber
+							value={stats.nrr / 100}
+							style="percent"
+							maximumFractionDigits={2}
+						/>
+					</Stat.ValueText>
+				</Stat.Root>
+				<Stat.Root>
+					<Stat.Label>Chain</Stat.Label>
+					<Stat.ValueText>{stats.chain}</Stat.ValueText>
+				</Stat.Root>
+
+				{/* TODO: add vault to metavault onClick */}
+				<IconButton
+					alignSelf={"center"}
+					colorPalette={"green"}
+					rounded={"full"}
+					// onClick={handleAddVault(stats.vault)}
+				>
+					<LuPlus />
+				</IconButton>
+			</DataList.ItemValue>
+		</DataList.Item>
 	);
+}
+
+/* Utils */
+async function fetchOnKiln(path: string) {
+	return fetch(
+		`https://api${import.meta.env.DEV && ".testnet"}.kiln.fi/v1${path}`,
+		{
+			headers: {
+				Authorization: `Bearer ${import.meta.env.VITE_KILN_API_KEY}`,
+			},
+		},
+	).then((res) => res.json());
 }
