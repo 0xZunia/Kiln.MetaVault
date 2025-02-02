@@ -10,4 +10,6 @@ export const addressConfig = {
 		"0x682cfc8a3d956fba2c40791ec8d5a49e13baafbd" as ContractAddress,
 		"0x85fbdc49b2e7b9e07468733873c8f199fc44259f" as ContractAddress,
 	],
+	"ERC-20_USDC":
+		"0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8" as ContractAddress,
 };

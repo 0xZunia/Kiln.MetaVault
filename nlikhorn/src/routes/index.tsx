@@ -6,6 +6,7 @@ import {
 	SelectTrigger,
 	SelectValueText,
 } from "@/components/ui/select";
+import { DepositButton } from "@/components/web3/depositButton";
 import { useGetCurrentMetaVault } from "@/hooks/metaVault";
 import { addressConfig } from "@/utils/addressConfig";
 import { metaVaultABI } from "@/utils/metaVaultABI";
@@ -20,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { parseUnits } from "viem/utils";
 import { useWriteContract } from "wagmi";
 
 export const Route = createFileRoute("/")({
@@ -121,6 +123,13 @@ function DemoMetaVaultTest() {
 					</HStack>
 				</>
 			)}
+
+			<HStack>
+				<DepositButton
+					token_address={addressConfig["ERC-20_USDC"]}
+					amount={parseUnits("100", 6)}
+				/>
+			</HStack>
 		</>
 	);
 }
