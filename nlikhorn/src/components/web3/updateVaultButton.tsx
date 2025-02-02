@@ -2,7 +2,7 @@ import { useGetCurrentMetaVault } from "@/hooks/metaVault";
 import { metaVaultABI } from "@/utils/metaVaultABI";
 import { IconButton } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { LuPlus } from "react-icons/lu";
+import { LuPlus, LuTrash2 } from "react-icons/lu";
 import {
 	useReadContract,
 	useWaitForTransactionReceipt,
@@ -75,21 +75,23 @@ export function UpdateVaultButton({
 		<IconButton
 			alignSelf={"center"}
 			colorPalette={"red"}
-			rounded={"full"}
+			// rounded={"full"}
 			onClick={handleRemoveVault}
 			loading={unsubPending || unsubLoading}
 			disabled={unsubPending || unsubSuccess}
+			variant={"subtle"}
 		>
-			<LuPlus style={{ transform: "rotate(45deg)" }} />
+			<LuTrash2 />
 		</IconButton>
 	) : (
 		<IconButton
 			alignSelf={"center"}
 			colorPalette={"green"}
-			rounded={"full"}
+			// rounded={"full"}
 			onClick={handleAddVault}
 			loading={subPending || subLoading}
 			disabled={subPending || subSuccess}
+			variant={"subtle"}
 		>
 			<LuPlus />
 		</IconButton>
