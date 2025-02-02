@@ -32,23 +32,37 @@ function Index() {
 	return (
 		<Grid
 			gridTemplateColumns={"repeat(2, 1fr)"}
-			gridTemplateRows={"repeat(2, 1fr)"}
+			gridTemplateRows={"repeat(2, auto)"}
 			gap={2}
 		>
 			<GridItem colSpan={2} width={"full"}>
-				<Skeleton boxSize={"full"} />
+				<Skeleton boxSize={"full"} colorPalette={"green"} />
 			</GridItem>
-			<GridItem>
-				<DemoMetaVaultTest />
+			<GridItem width={"full"}>
+				<Skeleton boxSize={"full"} colorPalette={"orange"} />
 			</GridItem>
-			<GridItem as={Skeleton}>
-				<Skeleton id="available founds" width={"full"} />
+			<GridItem
+				width={"full"}
+				display={"grid"}
+				gap={1}
+				gridTemplateColumns={"repeat(2, auto)"}
+				gridTemplateRows={"repeat(2, auto)"}
+			>
+				<GridItem>
+					<Skeleton boxSize={"full"} />
+				</GridItem>
+				<GridItem>
+					<Skeleton boxSize={"full"} />
+				</GridItem>
+				<GridItem>
+					<Skeleton boxSize={"full"} />
+				</GridItem>
 			</GridItem>
 		</Grid>
 	);
 }
 
-function DemoMetaVaultTest() {
+export function DemoMetaVaultTest() {
 	const { activeVaults, vaultAddress: currentVaultAddress } =
 		useGetCurrentMetaVault();
 
