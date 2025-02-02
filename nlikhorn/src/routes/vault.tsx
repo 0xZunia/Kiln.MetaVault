@@ -1,13 +1,10 @@
 import { SimpleLoader } from "@/components/custom/simpleLoader";
 import { Avatar } from "@/components/ui/avatar";
-import { AddVaultButton } from "@/components/web3/addVaultButton";
-import { RemoveVaultButton } from "@/components/web3/removeVaultButton";
+import { UpdateVaultButton } from "@/components/web3/updateVaultButton";
 import { useGetMetaVault } from "@/hooks/factory";
-import { useGetCurrentMetaVault } from "@/hooks/metaVault";
 import { addressConfig } from "@/utils/addressConfig";
 import { factoryABI } from "@/utils/factoryABI";
 import { fetchOnKiln } from "@/utils/kilnConnectFetch";
-import { metaVaultABI } from "@/utils/metaVaultABI";
 import {
 	Button,
 	Card,
@@ -22,7 +19,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { useAccount, useReadContract, useWriteContract } from "wagmi";
+import { useAccount, useWriteContract } from "wagmi";
 
 export const Route = createFileRoute("/vault")({
 	component: RouteComponent,
@@ -212,18 +209,6 @@ export type NetworkStats = {
 };
 
 function NetworkStatsItem({ stats }: { stats: NetworkStats }) {
-	const { vaultAddress } = useGetCurrentMetaVault();
-
-	const { data: getActiveVaults } = useReadContract({
-		abi: metaVaultABI,
-		address: vaultAddress,
-		functionName: "getActiveVaults",
-	});
-
-	const isActive = getActiveVaults?.some(
-		(vault) => vault.toLowerCase() === stats.vault.toLowerCase(),
-	);
-
 	return (
 		<DataList.Item>
 			<DataList.ItemLabel>
@@ -246,11 +231,7 @@ function NetworkStatsItem({ stats }: { stats: NetworkStats }) {
 					<Stat.ValueText>{stats.chain}</Stat.ValueText>
 				</Stat.Root>
 
-				{isActive ? (
-					<RemoveVaultButton vaultAddress={stats.vault} />
-				) : (
-					<AddVaultButton vaultAddress={stats.vault} />
-				)}
+				<UpdateVaultButton vaultAddress={stats.vault} />
 			</DataList.ItemValue>
 		</DataList.Item>
 	);
