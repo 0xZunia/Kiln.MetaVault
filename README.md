@@ -3,6 +3,11 @@ title: Nlik
 author: souhoc, ReyanCarlier, noegrx
 date: 31/01/2025
 ---
+
+Hackathon #1 2025 - Hosted by [Kiln](https://kiln.fi)
+
+We placed 3rd in category DeFi !
+
 ## Currently Deployed Contracts
 
 ### MetaVaultFactory
