@@ -1,6 +1,6 @@
 ---
 title: Nlik
-author: souhoc, ReyanCarlier, noegrx
+author: souhoc, 0xZunia, noegrx
 date: 31/01/2025
 ---
 
